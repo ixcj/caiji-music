@@ -1,0 +1,74 @@
+@import url('./group.scss');
+@import url('./overlayStyle.scss');
+
+:root {
+  font-size: 16px;
+}
+
+* {
+  user-select: none;
+}
+
+.animation-time {
+  transition-duration: var(--animationTime) !important;
+}
+
+.text-animation-time {
+  transition: color var(--animationTime) cubic-bezier(0.25, 0.8, 0.5, 1), visibility 0s !important;
+}
+
+.overflow-y-hidden body {
+  padding-right: var(--scrollBarWidth);
+}
+
+.scrollbar-y::-webkit-scrollbar {
+  width: 8px;
+}
+.scrollbar-y::-webkit-scrollbar-track {
+  background: #fff;
+}
+.scrollbar-y::-webkit-scrollbar-thumb {
+  width: 8px;
+  background: #ccc;
+  border-radius: 8px;
+}
+.scrollbar-y::-webkit-scrollbar-thumb:hover {
+  background: #909090;
+}
+
+.text-overflow {
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+.text-overflow2 {
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.text-highlight {
+  color: var(--mainColor);
+}
+
+
+
+
+
+// 设置文字大小
+@media screen and (max-width: 800px) {
+  :root {
+    font-size: 15px;
+  }
+}
+@media screen and (max-width: 600px) {
+  :root {
+    font-size: 14px;
+  }
+}

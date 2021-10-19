@@ -1,0 +1,111 @@
+.group {
+  font-size: calc(100vw / 300 + 10px);
+  position: relative;
+  .group-title {
+    margin: 10px 0;
+    color: #333;
+    transition: .25s;
+    .more {
+      cursor: pointer;
+      &:hover {
+        color: #000;
+      }
+      &::after {
+        content: "\F0142";
+        font: normal normal normal 24px/1 "Material Design Icons";
+        font-size: 1.25em;
+        vertical-align: text-bottom;
+        margin-left: -0.2em;
+      }
+    }
+  }
+}
+
+// 歌单元素比例
+.song-list-group {
+  .swiper-item {
+    &.xl {
+      width: 17%;
+    }
+    &.lg {
+      width: 17%;
+    }
+    &.md {
+      width: 17%;
+    }
+    &.sm {
+      width: 27%;
+    }
+    &.xs {
+      width: 27%;
+    }
+  }
+}
+
+// 歌曲元素比例
+.song-group {
+  .swiper-item {
+    padding-right: 8px;
+    box-sizing: border-box;
+    &:last-child {
+      padding-right: 0;
+    }
+    .song-item {
+      margin-bottom: 8px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+    &.xl {
+      width: 33%;
+      &:last-child {
+        width: 34% !important;
+      }
+    }
+    &.lg {
+      width: 33%;
+      &:last-child {
+        width: 34% !important;
+      }
+    }
+    &.md {
+      width: 47%;
+      &:last-child {
+        width: 53% !important;
+      }
+    }
+    &.sm {
+      width: 80%;
+      &:last-child {
+        width: 100% !important;
+      }
+    }
+    &.xs {
+      width: 93%;
+      &:last-child {
+        width: 100% !important;
+      }
+    }
+  }
+}
+
+// MV元素比例
+.mv-group {
+  .swiper-item {
+    &.xl {
+      width: 30%;
+    }
+    &.lg {
+      width: 30%;
+    }
+    &.md {
+      width: 45%;
+    }
+    &.sm {
+      width: 60%;
+    }
+    &.xs {
+      width: 70%;
+    }
+  }
+}

@@ -1,0 +1,12 @@
+.v-skeleton-loader {
+  height: 100%;
+  .v-skeleton-loader__image {
+    height: 100%;
+  }
+}
+
+.v-dialog,
+.v-navigation-drawer,
+.v-main {
+  transition-duration: var(--animationTime);
+}
