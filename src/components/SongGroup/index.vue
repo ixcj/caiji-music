@@ -3,23 +3,25 @@
     <h2 class="group-title" v-if="title">
       <span :class="path && 'more'">{{ title }}</span>
     </h2>
-    <swiper class="swiper-box" ref="mySwiper" :options="swiperOptions">
-      <swiper-slide
-        v-for="(row, index) in dataListFormat"
-        :key="index"
-        class="swiper-item"
-        :class="$vuetify.breakpoint.name"
-      >
-        <SongItem
-          class="song-item"
-          v-for="item in row"
-          :key="item.id"
-          :item="item"
-          :loading="loading"
-          @dblclick.native="dblClickSongItem(item)"
-        />
-      </swiper-slide>
-    </swiper>
+    <div class="swiper-box">
+      <swiper ref="mySwiper" :options="swiperOptions">
+        <swiper-slide
+          v-for="(row, index) in dataListFormat"
+          :key="index"
+          class="swiper-item"
+          :class="$vuetify.breakpoint.name"
+        >
+          <SongItem
+            class="song-item"
+            v-for="item in row"
+            :key="item.id"
+            :item="item"
+            :loading="loading"
+            @dblclick.native="dblClickSongItem(item)"
+          />
+        </swiper-slide>
+      </swiper>
+    </div>
   </div>
 </template>
 

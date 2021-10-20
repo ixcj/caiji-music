@@ -6,7 +6,7 @@
     :timeout="message.timeout"
     :key="key"
   >
-    {{message.content}}
+    {{ message.content || '未知类型' }}
 
     <template v-slot:action="{ attrs }">
       <v-btn
