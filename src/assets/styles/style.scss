@@ -9,6 +9,14 @@
   user-select: none;
 }
 
+:root #main-view a {
+  color: var(--mainColor);
+  opacity: 0.8;
+  &:hover {
+    opacity: 1;
+  }
+}
+
 .animation-time {
   transition-duration: var(--animationTime) !important;
 }
