@@ -7,3 +7,10 @@
 ## api服务
 
 [网易云音乐 Node.js API](https://github.com/Binaryify/NeteaseCloudMusicApi)
+
+### 使用
+
+```
+npm i
+npm run dev
+```
