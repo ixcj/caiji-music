@@ -58,7 +58,7 @@ export default {
       default: '没有更多了'
     },
     // 是否在初始化时立即执行滚动位置检查
-    immediateTheck: {
+    immediateCheck: {
       type: Boolean,
       default: true
     },
@@ -66,7 +66,7 @@ export default {
     disabled: {
       type: Boolean,
       default: false
-    } 
+    }
   },
   data() {
     return {
@@ -80,6 +80,7 @@ export default {
     },
     onScroll() {
       if(this.finished || this.disabled) return
+
       clearTimeout(this.onScrollTimer)
       this.onScrollTimer = setTimeout(() => {
         this.isBottom() && !this.loading && this.$emit('load')
@@ -87,7 +88,7 @@ export default {
     },
   },
   mounted() {
-    this.immediateTheck && this.$emit('load')
+    this.immediateCheck && this.onScroll()
   }
 };
 </script>

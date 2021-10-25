@@ -1,19 +1,30 @@
 <template>
   <v-list nav dense class="NavigationDrawerList">
-    <v-list-item
-      link
-      :active-class="activeClass"
+    <v-tooltip
+      right
+      :disabled="drawer"
       v-for="(item, index) in menuList"
       :key="index"
-      :to="item.to"
     >
-      <v-list-item-action>
-        <v-icon>{{item.icon}}</v-icon>
-      </v-list-item-action>
-      <v-list-item-content>
-        <v-list-item-title>{{item.text}}</v-list-item-title>
-      </v-list-item-content>
-    </v-list-item>
+      <template v-slot:activator="{ on, attrs }">
+        <v-list-item
+          link
+          :to="item.to"
+          :active-class="activeClass"
+          v-bind="attrs"
+          v-on="on"
+        >
+          <v-list-item-action>
+            <v-icon>{{item.icon}}</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>{{item.text}}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </template>
+      <span>{{item.text}}</span>
+    </v-tooltip>
+    
   </v-list>
 </template>
 

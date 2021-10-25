@@ -12,12 +12,14 @@ const keywords = `${ title },${ author },${ domain },音乐,播放器,前端,VUE
 const description = `${ title }是一款由${ author }编写的在线音乐应用，提供歌曲搜索、免费歌曲在线试听、MV播放等功能。`
 // og:image
 const ogImage = `${ fullDomain }img/icons/android-chrome-192x192.png`
+
 // 接口地址
 const BASE_API = process.env.VUE_APP_BASE_API || 'https://api.music.xcj.im/'
 // 本地调试接口地址
 const DEV_API = '/dev-api'
 // 调试时是否启用代理
 const devServerProxy = true
+
 // 播放列表最大长度
 const waitingPlayListMaxLength = 1000
 // 默认专辑封面
@@ -34,6 +36,13 @@ const theme = {
   dynamicEffect: 'LonelyPlanet', // 完整播放器封面动效
 }
 
+// about页面的链接
+const aboutUrls = [
+  {
+    text: 'github',
+    value: 'https://github.com/ixcj/caiji-music'
+  }
+]
 
 // 菜单列表
 const menuList = [
@@ -75,6 +84,8 @@ module.exports = {
   retry: 3,
   // 重新请求间隔时间
   retryDelay: 3000,
+
+  aboutUrls,
   
   menuList,
 }

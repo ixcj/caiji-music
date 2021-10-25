@@ -19,7 +19,7 @@
             ><!-- 移动端某些浏览器没内容时图片不会显示，未找到原因 -->0</v-img>
             <div class="copywriter">{{ item.copywriter }}</div>
             <div class="number">
-              <v-icon small color="#fff" style="margin-right: 3px;">mdi-play</v-icon>
+              <v-icon class="play-icon" small color="#fff">mdi-play</v-icon>
               {{ item.playCount > 100000 ? parseInt(item.playCount / 10000) + '万' : item.playCount }}
             </div>
           </div>
@@ -122,10 +122,20 @@ export default {
       align-items: center;
       position: absolute;
       right: 5px;
-      top: 2px;
+      top: 5px;
       color: #fff;
       opacity: 1;
       transition: var(--animationTime);
+      font-size: 0.8rem;
+      background-color: rgba($color: #000000, $alpha: 0.3);
+      backdrop-filter: blur(2px);
+      border-radius: 1rem;
+      padding: 0 0.5rem 0 0.3rem;
+      word-break: keep-all;
+      .play-icon {
+        margin-right: 3px;
+        font-size: 1rem;
+      }
     }
   }
   .name {

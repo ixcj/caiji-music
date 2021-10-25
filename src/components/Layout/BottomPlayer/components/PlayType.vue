@@ -1,7 +1,7 @@
 <template>
   <transition name="scale-transition">
     <div class="play-type" v-if="fullPlayer || !$vuetify.breakpoint.mobile">
-      <v-tooltip top >
+      <v-tooltip v-model="showTooltip" top>
         <template v-slot:activator="{ on, attrs }">
           <v-btn
             fab
@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import { isTouchDevice } from '@/utils'
 import { mapMutations, mapState } from 'vuex'
 
 export default {
@@ -35,6 +36,8 @@ export default {
   },
   data() {
     return {
+      showTooltip: false,
+      showTooltipTimer: null,
       playTypeList: {
         'orderPlay': {
           text: '顺序播放',
@@ -70,6 +73,16 @@ export default {
     ...mapState('setting', [
       'playType'
     ])
+  },
+  watch: {
+    showTooltip(val) {
+      if(val && isTouchDevice) {
+        clearTimeout(this.showTooltipTimer)
+        this.showTooltipTimer = setTimeout(() => {
+          this.showTooltip = false
+        }, 3000);
+      }
+    }
   }
 };
 </script>

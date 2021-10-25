@@ -1,6 +1,6 @@
 <template>
   <v-sheet
-    class="LogoBox rounded-circle"
+    class="LogoBox rounded-circle animation-time"
     :color="$store.getters.mainColor"
     :width="logoSize"
     :height="logoSize"
@@ -17,6 +17,12 @@
 <script>
 export default {
   name: 'LogoBox',
+  props: {
+    size: {
+      type: Number,
+      default: null
+    }
+  },
   data() {
     return {
       logoBg: require('@/assets/images/logo-bg.png')
@@ -25,7 +31,10 @@ export default {
   methods: {},
   computed: {
     logoSize() {
-      return this.$vuetify.breakpoint.smAndDown ? 40 : 48
+      const logoSize = this.size
+        ? this.size
+        : this.$vuetify.breakpoint.smAndDown ? 40 : 48
+      return logoSize
     }
   }
 };
@@ -33,11 +42,9 @@ export default {
 
 <style scoped lang="scss">
 .LogoBox {
-  border: 1px solid;
   overflow: hidden;
   position: relative;
   box-sizing: content-box;
-  transition: var(--animationTime);
   .logo-bg {
     width: 100%;
     height: 100%;

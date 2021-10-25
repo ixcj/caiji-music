@@ -33,8 +33,8 @@
       :color="$store.getters.mainColor"
     >
       <v-app-bar-nav-icon :color="$store.getters.textColor" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <div class="logo" @click.stop="logoClick">
-        <LogoBox />
+      <div class="logo-box" @click.stop="logoClick">
+        <LogoBox class="logo" />
         <span class="logo-title text-animation-time">{{ title }}</span>
       </div>
       <LayoutSearch />
@@ -277,11 +277,14 @@ export default {
   :root.overflow-y-hidden &{
     margin-right: var(--scrollBarWidth);
   }
-  .logo {
+  .logo-box {
     display: flex;
     align-items: center;
     margin-left: 3px;
     cursor: pointer;
+    .logo {
+      border: var(--mainColor) 1px solid;
+    }
     .logo-title {
       color: var(--textColor);
       margin-left: 5px;

@@ -34,23 +34,23 @@
             <v-icon>mdi-play</v-icon>
             <span @click="dialog = true">播放全部</span>
           </v-btn>
-            <div
-              class="description"
-              :class="{'text-overflow': !unfold}"
-              :style="{ '-webkit-line-clamp': lineClamp }"
-              v-if="pageNmae == 'Playlist'"
-              ref="description"
-            >
-              {{ description || '并没有描述' }}
-              <span class="arrows" @click="unfold = !unfold" v-show="descriptionOverflow">
-                <v-icon>{{ unfold ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
-              </span>
-            </div>
-            <div v-else class="artist">
-              歌手：{{ artists }}
-              <br />
-              时间：{{ publishTime | formatDate }}
-            </div>
+          <div
+            class="description"
+            :class="{'text-overflow': !unfold}"
+            :style="{ '-webkit-line-clamp': lineClamp }"
+            v-if="pageNmae == 'Playlist'"
+            ref="description"
+          >
+            {{ description || '并没有描述' }}
+            <span class="arrows" @click="unfold = !unfold" v-show="descriptionOverflow">
+              <v-icon>{{ unfold ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+            </span>
+          </div>
+          <div v-else class="artist">
+            歌手：{{ artists }}
+            <br />
+            时间：{{ publishTime | formatDate }}
+          </div>
         </v-skeleton-loader>
       </div>
     </div>

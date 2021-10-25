@@ -240,7 +240,7 @@ export default {
     })
   },
   watch: {
-    keyword: function(newVal, oldVal) {
+    keyword(newVal, oldVal) {
       if (newVal) {
         if (!oldVal) {
           this.getSearchSuggest()
