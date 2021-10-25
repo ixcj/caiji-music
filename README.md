@@ -1,6 +1,14 @@
-# 菜鸡音乐
+<div align="center">
+  <a href="https://music.xcj.im/">
+    <img src="https://raw.githubusercontent.com/ixcj/caiji-music/dev/public/img/icons/android-chrome-192x192.png" width="192">
+  </a>
+  <h2>菜鸡音乐</h2>
+  <p>基于Vue的响应式音乐播放器</p>
+</div>
 
-菜鸡音乐一款在线音乐应用，提供歌曲搜索、免费歌曲在线试听、MV播放等功能。
+## 介绍
+
+菜鸡音乐是一款在线音乐应用，提供歌曲搜索、免费歌曲在线试听、MV播放等功能。
 
 [预览地址](https://music.xcj.im)
 
