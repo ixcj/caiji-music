@@ -60,6 +60,10 @@ export default {
       'setPlayType'
     ]),
     handlePlayType() {
+      if(this.showTooltip == false) {
+        this.showTooltip = true
+      }
+
       const typeArr = Object.keys(this.playTypeList)
       const index = typeArr.indexOf(this.playType)
       if(index < typeArr.length - 1) {
@@ -67,6 +71,12 @@ export default {
       } else {
         this.setPlayType(typeArr[0])
       }
+    },
+    resetTimer(show) {
+      clearTimeout(this.showTooltipTimer)
+      this.showTooltipTimer = setTimeout(() => {
+        this.showTooltip = show
+      }, 3000);
     }
   },
   computed: {
@@ -77,11 +87,11 @@ export default {
   watch: {
     showTooltip(val) {
       if(val && isTouchDevice) {
-        clearTimeout(this.showTooltipTimer)
-        this.showTooltipTimer = setTimeout(() => {
-          this.showTooltip = false
-        }, 3000);
+        this.resetTimer(false)
       }
+    },
+    playType() {
+      this.resetTimer(false)
     }
   }
 };
