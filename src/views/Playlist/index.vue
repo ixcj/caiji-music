@@ -47,9 +47,12 @@
             </span>
           </div>
           <div v-else class="artist">
-            歌手：{{ artists }}
-            <br />
-            时间：{{ publishTime | formatDate }}
+            <div class="text-overflow">
+              歌手：{{ artists }}
+            </div>
+            <div class="text-overflow">
+              时间：{{ publishTime | formatDate }}
+            </div>
           </div>
         </v-skeleton-loader>
       </div>
