@@ -1,6 +1,7 @@
 <template>
   <v-sheet
     class="LogoBox rounded-circle animation-time"
+    :class="{ 'auto-border': autoBorder }"
     :color="$store.getters.mainColor"
     :width="logoSize"
     :height="logoSize"
@@ -21,6 +22,10 @@ export default {
     size: {
       type: Number,
       default: null
+    },
+    autoBorder: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -45,6 +50,9 @@ export default {
   overflow: hidden;
   position: relative;
   box-sizing: content-box;
+  &.auto-border {
+    border: var(--mainColor) 1px solid;
+  }
   .logo-bg {
     width: 100%;
     height: 100%;
