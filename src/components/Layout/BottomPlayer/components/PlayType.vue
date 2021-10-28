@@ -7,7 +7,7 @@
             fab
             small
             class="play-type-but"
-            :class="{ 'mx-4': !fullPlayer }"
+            :class="{ 'mx-4': !fullPlayer, 'white-text': fullPlayer }"
             :color="fullPlayer ? 'rgba(255, 255, 255, 0.1)' : $store.getters.mainColor"
             v-bind="attrs"
             v-on="on"
@@ -102,6 +102,9 @@ export default {
   &-but {
     transition: var(--animationTime);
     color: var(--textColor);
+    &.white-text {
+      color: white;
+    }
   }
 }
 </style>

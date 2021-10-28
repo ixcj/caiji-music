@@ -10,11 +10,10 @@
   >
     <v-btn
       class="playlist-but"
+      :class="{ 'white-text': fullPlayer }"
       fab
       small
-      :color="
-        fullPlayer ? 'rgba(255, 255, 255, 0.1)' : $store.getters.mainColor
-      "
+      :color="fullPlayer ? 'rgba(255, 255, 255, 0.1)' : $store.getters.mainColor"
       @click="showPlayHistory = !showPlayHistory"
     >
       <v-icon dark>mdi-playlist-music</v-icon>
@@ -356,6 +355,9 @@ export default {
 .playlist-but {
   transition: var(--animationTime);
   color: var(--textColor);
+  &.white-text {
+    color: white;
+  }
 }
 
 ::v-deep .v-menu__content {
