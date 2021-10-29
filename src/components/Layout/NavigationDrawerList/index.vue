@@ -15,14 +15,14 @@
           v-on="on"
         >
           <v-list-item-action>
-            <v-icon>{{item.icon}}</v-icon>
+            <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>{{item.text}}</v-list-item-title>
+            <v-list-item-title>{{ item.text }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </template>
-      <span>{{item.text}}</span>
+      <span>{{ item.text }}</span>
     </v-tooltip>
     
   </v-list>

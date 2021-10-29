@@ -234,6 +234,7 @@ export default {
   max-width: 90vw;
   z-index: 99;
   color: #000 !important;
+  overflow: hidden;
   .top {
     padding: 8px 8px 0;
     height: 80px;
