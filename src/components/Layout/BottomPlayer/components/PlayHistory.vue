@@ -8,6 +8,7 @@
       '--playHistoryItemHeight': playHistoryItemHeight + 'px',
     }"
   >
+    <v-overlay :value="showPlayHistory" @click.native="showPlayHistory = false"></v-overlay>
     <v-btn
       class="playlist-but"
       :class="{ 'white-text': fullPlayer }"
@@ -356,6 +357,7 @@ export default {
 .playlist-but {
   transition: var(--animationTime);
   color: var(--textColor);
+  z-index: 9;
   &.white-text {
     color: white;
   }
