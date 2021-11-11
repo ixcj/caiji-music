@@ -105,12 +105,12 @@ export default {
             this.nolyric = true
           } else {
             this.sourceData = res.lrc.lyric
+            this.loading = false
           }
           this.updateLyricsLocation(true)
         }).catch(() => {
-          this.error = true
-        }).finally(() => {
           this.loading = false
+          this.error = true
         })
       } else {
         this.sourceData = ''
