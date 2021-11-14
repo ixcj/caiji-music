@@ -238,6 +238,7 @@ export default {
 .swiper-box {
   font-size: 18px;
   width: 100%;
+  height: 100%;
   .swiper-item {
     text-align: center;
     opacity: .4;
@@ -245,6 +246,7 @@ export default {
     box-sizing: border-box;
     position: relative;
     word-wrap: break-word;
+    height: auto;
     .mobile & {
       font-size: 16px;
       line-height: 20px;
