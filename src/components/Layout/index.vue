@@ -172,7 +172,7 @@ export default {
         }
       } else {
         $html.classList.remove('overflow-y-hidden')
-        if(isMobile && mobileHiddenFooter) {
+        if(mobileHiddenFooter) {
           footer.style.bottom = '0'
         }
       }
