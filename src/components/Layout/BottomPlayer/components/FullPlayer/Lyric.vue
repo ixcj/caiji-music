@@ -179,16 +179,18 @@ export default {
 
       const lyric = []
       this.sourceData.split('\n').filter(Boolean).forEach(item => {
-        const lyricItem = item.replace(/\[\d{2}:\d{2}((\.|\:)(\d{1}|\d{2}|\d{3}))?\]/g, '').trim()
-        const timeArr = item.match(/\[\d{2}:\d{2}((\.|\:)(\d{1}|\d{2}|\d{3}))?\]/g)
-        timeArr.forEach(item => {
-          const times = item.substring(item.indexOf("[") + 1, item.indexOf("]")).split(':')
-          const time = times.length ? Number(times[0]) * 60 + Number(times[1]) : 0
-          lyric.push({
-            text: lyricItem,
-            time
+        const lyricItem = item.replace(/\[(\d{1}|\d{2}):(\d{1}|\d{2})((\.|\:)(\d{1}|\d{2}|\d{3}))?\]/g, '').trim()
+        const timeArr = item.match(/\[(\d{1}|\d{2}):(\d{1}|\d{2})((\.|\:)(\d{1}|\d{2}|\d{3}))?\]/g)
+        if(Array.isArray(timeArr)) {
+          timeArr.forEach(item => {
+            const times = item.substring(item.indexOf("[") + 1, item.indexOf("]")).split(':')
+            const time = times.length ? Number(times[0]) * 60 + Number(times[1]) : 0
+            lyric.push({
+              text: lyricItem,
+              time
+            })
           })
-        })
+        }
       })
 
       return lyric.filter(item => item.text.length && !isNaN(item.time)).sort((a, b) => a.time - b.time)
