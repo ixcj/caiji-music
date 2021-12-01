@@ -8,13 +8,13 @@
       '--playHistoryItemHeight': playHistoryItemHeight + 'px',
     }"
   >
+    <v-overlay :value="showPlayHistory" @click.native="showPlayHistory = false"></v-overlay>
     <v-btn
       class="playlist-but"
+      :class="{ 'white-text': fullPlayer }"
       fab
       small
-      :color="
-        fullPlayer ? 'rgba(255, 255, 255, 0.1)' : $store.getters.mainColor
-      "
+      :color="fullPlayer ? 'rgba(255, 255, 255, 0.1)' : $store.getters.mainColor"
       @click="showPlayHistory = !showPlayHistory"
     >
       <v-icon dark>mdi-playlist-music</v-icon>
@@ -235,6 +235,7 @@ export default {
   max-width: 90vw;
   z-index: 99;
   color: #000 !important;
+  overflow: hidden;
   .top {
     padding: 8px 8px 0;
     height: 80px;
@@ -356,6 +357,10 @@ export default {
 .playlist-but {
   transition: var(--animationTime);
   color: var(--textColor);
+  z-index: 9;
+  &.white-text {
+    color: white;
+  }
 }
 
 ::v-deep .v-menu__content {

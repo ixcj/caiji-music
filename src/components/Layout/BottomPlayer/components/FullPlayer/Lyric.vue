@@ -105,12 +105,12 @@ export default {
             this.nolyric = true
           } else {
             this.sourceData = res.lrc.lyric
+            this.loading = false
           }
           this.updateLyricsLocation(true)
         }).catch(() => {
-          this.error = true
-        }).finally(() => {
           this.loading = false
+          this.error = true
         })
       } else {
         this.sourceData = ''
@@ -179,16 +179,18 @@ export default {
 
       const lyric = []
       this.sourceData.split('\n').filter(Boolean).forEach(item => {
-        const lyricItem = item.replace(/\[\d{2}:\d{2}((\.|\:)(\d{1}|\d{2}|\d{3}))?\]/g, '').trim()
-        const timeArr = item.match(/\[\d{2}:\d{2}((\.|\:)(\d{1}|\d{2}|\d{3}))?\]/g)
-        timeArr.forEach(item => {
-          const times = item.substring(item.indexOf("[") + 1, item.indexOf("]")).split(':')
-          const time = times.length ? Number(times[0]) * 60 + Number(times[1]) : 0
-          lyric.push({
-            text: lyricItem,
-            time
+        const lyricItem = item.replace(/\[(\d{1}|\d{2}):(\d{1}|\d{2})((\.|\:)(\d{1}|\d{2}|\d{3}))?\]/g, '').trim()
+        const timeArr = item.match(/\[(\d{1}|\d{2}):(\d{1}|\d{2})((\.|\:)(\d{1}|\d{2}|\d{3}))?\]/g)
+        if(Array.isArray(timeArr)) {
+          timeArr.forEach(item => {
+            const times = item.substring(item.indexOf("[") + 1, item.indexOf("]")).split(':')
+            const time = times.length ? Number(times[0]) * 60 + Number(times[1]) : 0
+            lyric.push({
+              text: lyricItem,
+              time
+            })
           })
-        })
+        }
       })
 
       return lyric.filter(item => item.text.length && !isNaN(item.time)).sort((a, b) => a.time - b.time)
@@ -238,6 +240,7 @@ export default {
 .swiper-box {
   font-size: 18px;
   width: 100%;
+  height: 100%;
   .swiper-item {
     text-align: center;
     opacity: .4;
@@ -245,6 +248,7 @@ export default {
     box-sizing: border-box;
     position: relative;
     word-wrap: break-word;
+    height: auto;
     .mobile & {
       font-size: 16px;
       line-height: 20px;

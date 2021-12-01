@@ -7,7 +7,7 @@
             fab
             small
             class="play-type-but"
-            :class="{ 'mx-4': !fullPlayer }"
+            :class="{ 'mx-4': !fullPlayer, 'white-text': fullPlayer }"
             :color="fullPlayer ? 'rgba(255, 255, 255, 0.1)' : $store.getters.mainColor"
             v-bind="attrs"
             v-on="on"
@@ -60,6 +60,10 @@ export default {
       'setPlayType'
     ]),
     handlePlayType() {
+      if(this.showTooltip == false) {
+        this.showTooltip = true
+      }
+
       const typeArr = Object.keys(this.playTypeList)
       const index = typeArr.indexOf(this.playType)
       if(index < typeArr.length - 1) {
@@ -67,6 +71,12 @@ export default {
       } else {
         this.setPlayType(typeArr[0])
       }
+    },
+    resetTimer(show) {
+      clearTimeout(this.showTooltipTimer)
+      this.showTooltipTimer = setTimeout(() => {
+        this.showTooltip = show
+      }, 3000);
     }
   },
   computed: {
@@ -77,11 +87,11 @@ export default {
   watch: {
     showTooltip(val) {
       if(val && isTouchDevice) {
-        clearTimeout(this.showTooltipTimer)
-        this.showTooltipTimer = setTimeout(() => {
-          this.showTooltip = false
-        }, 3000);
+        this.resetTimer(false)
       }
+    },
+    playType() {
+      this.resetTimer(false)
     }
   }
 };
@@ -92,6 +102,9 @@ export default {
   &-but {
     transition: var(--animationTime);
     color: var(--textColor);
+    &.white-text {
+      color: white;
+    }
   }
 }
 </style>

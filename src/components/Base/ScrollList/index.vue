@@ -95,7 +95,7 @@ export default {
 
 <style scoped lang="scss">
 .scroll-list {
-  padding-bottom: 42px;
+  padding-bottom: calc(2rem + 12px);
   position: relative;
 
   .hint {
@@ -105,6 +105,9 @@ export default {
     width: 100%;
     text-align: center;
     .text {
+      display: inline-block;
+      height: 2rem;
+      line-height: 2rem;
       font-size: 1rem;
       margin-left: .8rem;
     }
