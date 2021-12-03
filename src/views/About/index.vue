@@ -2,16 +2,16 @@
   <div class="About">
     <div class="content">
       <LogoBox :size="100" />
-      <h1>菜鸡音乐</h1>
-      <p>菜鸡音乐是一款在线音乐应用，提供歌曲搜索、免费歌曲在线试听、MV播放等功能。</p>
-      <p><a class="url" v-for="item in aboutUrls" :href="item.value" target="_blank">{{ item.text }}</a></p>
+      <h1>{{ title }}</h1>
+      <p>{{ title }}是一款在线音乐应用，提供歌曲搜索、免费歌曲在线试听、MV播放等功能。</p>
+      <p><a class="url" v-for="(item, index) in aboutUrls" :key="index" :href="item.value" target="_blank">{{ item.text }}</a></p>
     </div>
     <p class="tips">该项目仅用于交流学习，不提供下载、VIP解析等功能</p>
   </div>
 </template>
 
 <script>
-import { aboutUrls } from '@/config'
+import { title, aboutUrls } from '@/config'
 import LogoBox from '@/components/Layout/LogoBox'
 
 export default {
@@ -21,6 +21,7 @@ export default {
   },
   data() {
     return {
+      title,
       aboutUrls,
     };
   },
