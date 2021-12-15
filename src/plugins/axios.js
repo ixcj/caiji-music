@@ -53,7 +53,7 @@ axios.interceptors.response.use(
     const codeArr = [200, 301, 800, 801, 802, 803] // 不提示错误的状态码
     if(!codeArr.includes(response.data.code)) {
       store.commit('layout/setMessage', {
-        content: response.data.message,
+        content: response.data.msg || response.data.message || '未知错误',
         color: 'error',
         timeout: 3000,
         isShow: true
@@ -63,7 +63,7 @@ axios.interceptors.response.use(
   },
   function (error) {
     store.commit('layout/setMessage', {
-      content: error.response.data.message,
+      content: error.response.data.msg || error.response.data.message || '未知错误',
       color: 'error',
       timeout: 3000,
       isShow: true
