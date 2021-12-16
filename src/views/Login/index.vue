@@ -115,7 +115,10 @@ export default {
       this.setUserInfo(userInfo)
 
       const replaceParam =  this.historyArr.length > 1 ? this.historyArr[this.historyArr.length - 2] : { name: 'Home' }
-      this.$router.replace(replaceParam)
+
+      this.$nextTick(() => {
+        this.$router.replace(replaceParam)
+      })
     }
   }
 }

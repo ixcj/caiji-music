@@ -8,6 +8,8 @@ import { BASE_API, DEV_API, timeout, retry, retryDelay } from '@/config'
 
 Vue.use(VueAxios, axios)
 
+const notErrorCode = [200, 301, 800, 801, 802, 803] // 不提示错误的状态码
+
 if (process.env.NODE_ENV === 'development') {
   axios.defaults.baseURL = DEV_API
 } else if (process.env.NODE_ENV === 'production') {
@@ -50,8 +52,7 @@ axios.interceptors.request.use(config => {
 // 响应拦截器
 axios.interceptors.response.use(
   function (response) {
-    const codeArr = [200, 301, 800, 801, 802, 803] // 不提示错误的状态码
-    if(!codeArr.includes(response.data.code)) {
+    if(!notErrorCode.includes(response.data.code)) {
       store.commit('layout/setMessage', {
         content: response.data.msg || response.data.message || '未知错误',
         color: 'error',
@@ -63,7 +64,7 @@ axios.interceptors.response.use(
   },
   function (error) {
     store.commit('layout/setMessage', {
-      content: error.response.data.msg || error.response.data.message || '未知错误',
+      content: error.response.data.msg || error.response.data.message || error.message || '未知错误',
       color: 'error',
       timeout: 3000,
       isShow: true
