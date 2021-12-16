@@ -212,13 +212,13 @@ export default {
     }
 
     // 如果cookie存在，则刷新登录状态
-    if(this.$store.getters.cookie) {
-      this.$api.login.refreshLogin().then(res => {
-        if(res.code != 200) {
-          this.dialog = true
-        }
-      })
-    }
+    // if(this.$store.getters.cookie) {
+    //   this.$api.login.refreshLogin().then(res => {
+    //     if(res.code != 200) {
+    //       this.dialog = true
+    //     }
+    //   })
+    // }
   },
   mounted() {
     // 全局播放音乐方法

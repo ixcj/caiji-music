@@ -113,11 +113,10 @@ export default {
             }, 1000)
             break;            
           case 803:
-            this.$api.user.userAccount({
-              cookie: res.cookie
-            }).then(res => {
+            const cookie = res.cookie
+            this.$api.user.userAccount({ cookie }).then(res => {
               setTimeout(() => {
-                this.$emit('login', res)
+                this.$emit('login', { ...res, cookie })
               }, 1000)
             })
             break;
