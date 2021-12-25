@@ -123,6 +123,9 @@
       transform: translate(-50%, -50%);
       border-radius: 50%;
       padding: 5px;
+      box-sizing: border-box;
+      width: 34px;
+      height: 34px;
     }
   }
   .content {

@@ -38,6 +38,7 @@
 <script>
 import { Swiper, SwiperSlide, directive  } from '@/components/Base/vue-awesome-swiper'
 import 'swiper/css/swiper.css'
+import { isEmpty } from '@/utils'
 
 export default {
   name: 'Lyric',
@@ -79,7 +80,7 @@ export default {
       if(!this.isUpdateLyricsLocation && this.swiper.activeIndex == index) {
         e.stopPropagation()
         const time = this.lyric[index].time
-        if(time) {
+        if(!isEmpty(time)) {
           this.$emit('setCurrentTime', time)
           this.$nextTick(() => {
             this.isUpdateLyricsLocation = true
