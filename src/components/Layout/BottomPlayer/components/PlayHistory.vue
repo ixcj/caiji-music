@@ -8,7 +8,7 @@
       '--playHistoryItemHeight': playHistoryItemHeight + 'px',
     }"
   >
-    <v-overlay :value="showPlayHistory" @click.native="showPlayHistory = false"></v-overlay>
+    <v-overlay :value="showPlayHistory" @click.native="showPlayHistory = false" :z-index="9"></v-overlay>
     <v-btn
       class="playlist-but"
       :class="{ 'white-text': fullPlayer }"
