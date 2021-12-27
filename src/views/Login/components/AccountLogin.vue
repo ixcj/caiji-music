@@ -196,9 +196,9 @@ export default {
     handleCodeLogin() {
       if (this.loading) return
 
-      this.loading = true
       this.isGetCaptcha = false
       if(this.$refs.captchaForm.validate()) {
+        this.loading = true
         const { phone, captcha } = this
         this.$api.login.phoneLogin({
           phone,
