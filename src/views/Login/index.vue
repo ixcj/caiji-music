@@ -22,39 +22,21 @@
         </transition>
       </div>
     </div>
-    <v-snackbar
-      v-if="message.color == 'error'"
-      class="message"
-      v-model="message.isShow"
-      :color="message.color"
-      :timeout="message.timeout"
-    >
-      {{message.content}}
-
-      <template v-slot:action="{ attrs }">
-        <v-btn
-          v-bind="attrs"
-          fab
-          dark
-          small
-          color="rgba(255,255,255,.15)"
-          @click="close"
-        >
-          <v-icon>mdi-close</v-icon>
-        </v-btn>
-      </template>
-    </v-snackbar>
+    <!-- message组件 -->
+    <Message style="bottom: 70px" />
   </v-app>
 </template>
 
 <script>
 import { mapState, mapMutations } from 'vuex'
+import Message from '@/components/Layout/Message'
 import account from './components/AccountLogin'
 import qrcode from './components/QrcodeLogin'
 
 export default {
   name: 'Login',
   components: {
+    Message,
     account,
     qrcode
   },
@@ -72,10 +54,7 @@ export default {
   },
   computed: {
     ...mapState('history', ['historyArr']),
-    ...mapState('user', ['userInfo']),
-    message() {
-      return this.$store.getters.message
-    }
+    ...mapState('user', ['userInfo'])
   },
   methods: {
     ...mapMutations('user', ['setUserInfo']),
@@ -101,13 +80,6 @@ export default {
         : this.switchModel('account')
     },
     handleLogin(data) {
-      // this.$message({
-      //   content: '登录成功',
-      //   color: 'success',
-      //   timeout: 3000,
-      //   isShow: true
-      // })
-
       const userInfo = data.profile
       userInfo.account = data.account
       userInfo.cookie = data.cookie

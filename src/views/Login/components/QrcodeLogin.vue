@@ -73,6 +73,9 @@ export default {
       qrKey: '',
       qrImg: '',
       qrCode: 0,
+      getKeyLoading: false,
+      getQrStatusLoading: false,
+      getImgLoading: false,
       avatarUrl: '',
       nickname: '',
       isShow: false
@@ -80,21 +83,30 @@ export default {
   },
   methods: {
     initQrImg() {
+      if (this.qrKey || this.getKeyLoading) return
+
+      this.getKeyLoading = true
       this.$api.login.qrKey().then(res => {
         this.qrKey = res.data.unikey
         this.getQrImg()
-      })
+      }).finally(() => { this.getKeyLoading = false })
     },
     getQrImg() {
+      if (this.getImgLoading) return
+
+      this.getImgLoading = true
       this.$api.login.qrCreate({
         key: this.qrKey,
         qrimg: true
       }).then(res => {
         this.qrImg = res.data.qrimg
         this.getQrStatus()
-      })
+      }).finally(() => { this.getImgLoading = false })
     },
     getQrStatus() {
+      if (this.getQrStatusLoading) return
+
+      this.getQrStatusLoading = true
       this.$api.login.qrCheck({
         key: this.qrKey
       }).then(res => {
@@ -121,7 +133,7 @@ export default {
             })
             break;
         }
-      })
+      }).finally(() => { this.getQrStatusLoading = false })
     },
     refreshQr() {
       this.qrImg = ''

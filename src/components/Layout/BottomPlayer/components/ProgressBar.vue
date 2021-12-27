@@ -61,7 +61,7 @@ export default {
 <style scoped lang="scss">
 .progress-bar {
   height: 24px;
-  z-index: 9;
+  z-index: 5;
   &.full-Player-progress-bar {
     display: flex;
   }
