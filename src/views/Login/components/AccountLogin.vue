@@ -10,7 +10,7 @@
           >
             <v-text-field
               v-model="account"
-              :rules="rules.account"
+              :rules="rules.accountAndEmail"
               label="输入手机号/邮箱"
               outlined
               required
@@ -37,26 +37,36 @@
         <div class="form-item-box">
           <v-form
             v-model="value"
-            ref="codeForm"
+            ref="captchaForm"
             @keyup.enter.native="handleCodeLogin"
           >
             <v-text-field
-              v-model="account"
-              :rules="rules.account"
-              label="输入手机号/邮箱"
+              v-model="phone"
+              :rules="rules.phone"
+              ref="captchaFormPhone"
+              label="输入手机号"
               outlined
               required
             ></v-text-field>
-            <v-text-field
-              name="password"
-              v-model="password"
-              :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-              :rules="rules.password"
-              :type="showPassword ? 'text' : 'password'"
-              label="输入密码"
-              outlined
-              @click:append="showPassword = !showPassword"
-            ></v-text-field>
+            <v-row>
+              <v-col cols="7">
+                <v-text-field
+                  v-model="captcha"
+                  :rules="rules.captcha"
+                  label="输入验证码"
+                  outlined
+                ></v-text-field>
+              </v-col>
+              <v-col cols="5">
+                <v-btn
+                  x-large
+                  class="get-captcha-btn"
+                  :loading="getCaptchaLoading"
+                  :disabled="Boolean(getCaptchaTimeout)"
+                  @click="getCaptcha"
+                >{{ getCaptchaTimeout > 0 ? `${getCaptchaTimeout}秒` : '获取验证码' }}</v-btn>
+              </v-col>
+            </v-row>
             <v-btn
               style="width: 100%;"
               x-large
@@ -68,10 +78,15 @@
         </div>
       </div>
       <v-btn
+        rounded
         class="switch"
         :class="loginMode"
         @click="switchLoginMode"
-      >{{ loginModeEnum[loginMode] }}</v-btn>
+      >
+        {{ loginModeEnum[loginMode].left }}
+        {{ loginModeEnum[loginMode].text }}
+        {{ loginModeEnum[loginMode].right }}
+      </v-btn>
     </div>
   </div>
 </template>
@@ -86,21 +101,42 @@ export default {
     return {
       loginMode: 'password', // password(密码登录) 或 code(验证码登录)
       loginModeEnum: {
-        password: '切换验证码登录',
-        code: '切换密码登录'
+        password: {
+          text: '切换验证码登录',
+          left: '',
+          right: '→'
+        },
+        code: {
+          text: '切换密码登录',
+          left: '←',
+          right: ''
+        }
       },
       value: false,
       showPassword: false,
       loading: false,
+      getCaptchaLoading: false,
+      getCaptchaTimeout: 0,
+      getCaptchaTimer: null,
       account: '',
+      phone: '',
       password: '',
+      captcha: '',
+      isGetCaptcha: true,
       rules: {
-        account: [
+        accountAndEmail: [
           v => !!v || '手机号/邮箱不能为空',
           v => validateTel(v) || validateEmail(v) || '手机号/邮箱格式错误'
         ],
+        phone: [
+          v => !!v || '手机号不能为空',
+          v => validateTel(v) || '手机号格式错误'
+        ],
         password: [
           v => !!v || '密码不能为空'
+        ],
+        captcha: [
+          v => this.isGetCaptcha || !!v || '验证码不能为空'
         ]
       }
     };
@@ -111,7 +147,6 @@ export default {
 
       if(this.$refs.accountForm.validate()) {
         const md5_password = md5(this.password)
-        const that = this
         
         this.loading = true
 
@@ -121,7 +156,7 @@ export default {
             md5_password
           }).then(res => {
             if(res.code == 200) {
-              that.$emit('login', res)
+              this.$emit('login', res)
             }
           }).finally(() => { this.loading = false })
         } else if(validateEmail(this.account)) {
@@ -130,19 +165,57 @@ export default {
             md5_password
           }).then(res => {
             if(res.code == 200) {
-              that.$emit('login', res)
+              this.$emit('login', res)
             }
           }).finally(() => { this.loading = false })
         }
       }
     },
+    getCaptcha() {
+      if (this.getCaptchaLoading || this.getCaptchaTimeout) return
+
+      this.isGetCaptcha = true
+      if (this.$refs.captchaForm.validate()) {
+        this.getCaptchaLoading = true
+        this.$api.login.captchaSent({
+          phone: this.phone
+        }).then(res => {
+          this.getCaptchaTimeout = 120
+          this.getCaptchaTimer = setInterval(() => {
+            if (--this.getCaptchaTimeout <= 0) {
+              clearInterval(this.getCaptchaTimer)
+              this.getCaptchaTimeout = 0
+            }
+          }, 1000)
+          this.$message({
+            content: '验证码发送成功，请注意查收！',
+          })
+        }).finally(() => { this.getCaptchaLoading = false })
+      }
+    },
     handleCodeLogin() {
-      console.log('验证码登录')
+      if (this.loading) return
+
+      this.loading = true
+      this.isGetCaptcha = false
+      if(this.$refs.captchaForm.validate()) {
+        const { phone, captcha } = this
+        this.$api.login.phoneLogin({
+          phone,
+          captcha
+        }).then(res => {
+          if(res.code == 200) {
+            this.$emit('login', res)
+          }
+        }).finally(() => { this.loading = false })
+      }
     },
     switchLoginMode() {
       this.loginMode === 'password'
         ? this.loginMode = 'code'
         : this.loginMode = 'password'
+      this.$refs.accountForm.resetValidation()
+      this.$refs.captchaForm.resetValidation()
     }
   },
 };
@@ -159,7 +232,7 @@ export default {
       display: flex;
       width: calc(200% + 30px);
       left: 0;
-      transition: 0.35s;
+      transition: 0.3s;
       &.code {
         transform: translateX(calc(-50% - 15px));
       }
@@ -179,6 +252,16 @@ export default {
       &.password {
         left: calc(100% - 160px);
       }
+    }
+  }
+  .get-captcha-btn {
+    width: 100%;
+    height: 56px;
+  }
+  ::v-deep {
+    .col {
+      padding-top: 0;
+      padding-bottom: 0;
     }
   }
 }
