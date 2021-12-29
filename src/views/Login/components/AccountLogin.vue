@@ -180,16 +180,18 @@ export default {
         this.$api.login.captchaSent({
           phone: this.phone
         }).then(res => {
-          this.getCaptchaTimeout = 120
-          this.getCaptchaTimer = setInterval(() => {
-            if (--this.getCaptchaTimeout <= 0) {
-              clearInterval(this.getCaptchaTimer)
-              this.getCaptchaTimeout = 0
-            }
-          }, 1000)
-          this.$message({
-            content: '验证码发送成功，请注意查收！',
-          })
+          if(res.code == 200) {
+            this.getCaptchaTimeout = 120
+            this.getCaptchaTimer = setInterval(() => {
+              if (--this.getCaptchaTimeout <= 0) {
+                clearInterval(this.getCaptchaTimer)
+                this.getCaptchaTimeout = 0
+              }
+            }, 1000)
+            this.$message({
+              content: '验证码发送成功，请注意查收！',
+            })
+          }
         }).finally(() => { this.getCaptchaLoading = false })
       }
     },

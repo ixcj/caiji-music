@@ -52,21 +52,22 @@ axios.interceptors.request.use(config => {
 // 响应拦截器
 axios.interceptors.response.use(
   function (response) {
-    if(!notErrorCode.includes(response.data.code)) {
+    if(notErrorCode.includes(response.data.code)) {
+      return response
+    } else {
       store.commit('layout/setMessage', {
         content: response.data.msg || response.data.message || '未知错误',
         color: 'error',
-        timeout: 3000,
+        timeout: 5000,
         isShow: true
       })
     }
-    return response
   },
   function (error) {
     store.commit('layout/setMessage', {
       content: error.response.data.msg || error.response.data.message || error.message || '未知错误',
       color: 'error',
-      timeout: 3000,
+      timeout: 5000,
       isShow: true
     })
     return error.response
@@ -93,7 +94,7 @@ export function post(url, data = {}){
     axios.post(url, data)
       .then(res => {
         resolve(res.data);
-      },err => {
+      }).catch(err => {
         reject(err)
       }).finally(() => {
       })
