@@ -12,6 +12,8 @@
 
 [预览地址](https://music.xcj.im)
 
+[预览地址(国内服务器)](https://music.ixcj.cn)
+
 ## api服务
 
 [网易云音乐 Node.js API](https://github.com/Binaryify/NeteaseCloudMusicApi)
