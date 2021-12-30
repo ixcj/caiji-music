@@ -96,7 +96,6 @@ export default {
       'setCurrentPlayTime'
     ]),
     ...mapActions('song', [
-      'getCurrentSongUrl',
       'getCurrentSongUrl'
     ]),
     // 播放音乐
