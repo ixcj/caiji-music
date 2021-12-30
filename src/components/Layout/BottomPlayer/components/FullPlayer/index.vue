@@ -246,7 +246,7 @@ export default {
       return this.$vuetify.breakpoint.smAndDown
     },
     preloadUrl() {
-      return this.isCurrentSong ? this.currentSongInfo.al.picUrl : this.defaultAlbumArt
+      return this.isCurrentSong ? `${this.currentSongInfo.al.picUrl}?param=256y256` : this.defaultAlbumArt
     },
     dynamicEffect() {
       return this.$store.getters.dynamicEffect

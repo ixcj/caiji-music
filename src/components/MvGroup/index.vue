@@ -4,7 +4,7 @@
       <span :class="path && 'more'">{{ title }}</span>
     </h2>
     <div class="swiper-box">
-      <swiper ref="mySwiper" :options="swiperOptions">
+      <swiper ref="mySwiper" :class="{ 'swiper-no-swiping': loading }" :options="swiperOptions">
         <swiper-slide
           v-for="item in dataListFormat"
           :key="item.id"
