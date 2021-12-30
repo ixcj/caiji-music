@@ -1,11 +1,11 @@
 // 网站title
-const title = '菜鸡音乐'
+const title = process.env.VUE_APP_TITLE || '菜鸡音乐'
 // 作者
-const author = 'xcj'
+const author = process.env.VUE_APP_AUTHOR ||'xcj'
 // 域
-const domain = 'music.xcj.im'
+const domain = process.env.VUE_APP_DOMAIN || 'music.xcj.im'
 // 完整的域
-const fullDomain = 'https://music.xcj.im/'
+const fullDomain = process.env.VUE_APP_FULL_DOMAIN || 'https://music.xcj.im/'
 // 网站关键词
 const keywords = `${ title },${ author },${ domain },音乐,播放器,前端,VUE`
 // 网站描述
