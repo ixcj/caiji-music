@@ -1,30 +1,24 @@
 <template>
   <div class="mv-item" @click.stop="goTo('Mv', item.id)">
     <v-responsive class="rounded" :aspect-ratio="16 / 9">
-      <v-skeleton-loader
-        boilerplate
-        class="cover-skeleton"
-        type="image"
-        :loading="loading"
+      <v-hover
+        v-slot:default="{ hover }"
+        :disabled="$vuetify.breakpoint.mobile"
       >
-        <v-hover
-          v-slot:default="{ hover }"
-          :disabled="$vuetify.breakpoint.mobile"
-        >
-          <div class="cover" :class="hover && 'hover'">
-            <v-img
-              class="img rounded"
-              :src="`${ item.picUrl }?param=400y225`"
-              :lazy-src="`${ item.picUrl }?param=32y18`"
-            ><!-- 移动端某些浏览器没内容时图片不会显示，未找到原因 -->0</v-img>
+        <div class="cover" :class="hover && 'hover'">
+          <v-img
+            class="img rounded"
+            :src="`${ item.picUrl }?param=400y225`"
+          ><!-- 移动端某些浏览器没内容时图片不会显示，未找到原因 -->0</v-img>
+          <template v-if="!loading">
             <div class="copywriter">{{ item.copywriter }}</div>
             <div class="number">
               <v-icon class="play-icon" small color="#fff">mdi-play</v-icon>
               {{ item.playCount > 100000 ? parseInt(item.playCount / 10000) + '万' : item.playCount }}
             </div>
-          </div>
-        </v-hover>
-      </v-skeleton-loader>
+          </template>
+        </div>
+      </v-hover>
     </v-responsive>
     <v-skeleton-loader
       boilerplate
@@ -88,6 +82,8 @@ export default {
   background-color: transparent;
   overflow: hidden;
   .cover {
+    height: 100%;
+    background-color: #dbdbdb;
     overflow: hidden;
     position: relative;
     cursor: pointer;
