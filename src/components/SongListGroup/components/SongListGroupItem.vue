@@ -1,33 +1,27 @@
 <template>
   <div class="song-list-item" @click="goPlaylist">
     <v-responsive class="rounded" :aspect-ratio="1">
-      <v-skeleton-loader
-        boilerplate
-        :loading="loading"
-        class="cover-skeleton"
-        type="image"
+      <v-hover
+        v-slot:default="{ hover }"
+        :disabled="$vuetify.breakpoint.mobile"
       >
-        <v-hover
-          v-slot:default="{ hover }"
-          :disabled="$vuetify.breakpoint.mobile"
+        <div
+          class="cover rounded"
+          :class="hover && 'hover'"
         >
-          <div
-            class="cover rounded"
-            :class="hover && 'hover'"
-          >
-            <v-img
-              class="cover-img"
-              :src="`${item.picUrl}?param=256y256`"
-              :lazy-src="`${item.picUrl}?param=32y32`"
-            ><!-- 移动端某些浏览器没内容时图片不会显示，未找到原因 -->0</v-img>
+          <v-img
+            class="cover-img"
+            :src="`${item.picUrl}?param=256y256`"
+          ><!-- 移动端某些浏览器没内容时图片不会显示，未找到原因 -->0</v-img>
+          <template v-if="!loading">
             <div class="number">
               <v-icon class="play-icon" small color="#fff">mdi-play</v-icon>
               {{ item.playCount > 100000 ? parseInt(item.playCount / 10000) + '万' : item.playCount }}
             </div>
             <v-icon class="icon" :color="$store.getters.textColor">mdi-play</v-icon>
-          </div>
-        </v-hover>
-      </v-skeleton-loader>
+          </template>
+        </div>
+      </v-hover>
     </v-responsive>
     <v-skeleton-loader
       boilerplate
@@ -76,6 +70,8 @@
 .song-list-item {
   width: 100%;
   .cover {
+    height: 100%;
+    background-color: #dbdbdb;
     position: relative;
     cursor: pointer;
     height: 100%;

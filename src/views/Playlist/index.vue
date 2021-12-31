@@ -1,21 +1,11 @@
 <template>
   <div class="playlist" v-resize="onResize">
     <div class="playlist-header">
-      <v-responsive class="rounded" :aspect-ratio="1" :width="imgSize" :height="imgSize">
-        <v-skeleton-loader
-          boilerplate
-          class="skeleton mx-auto"
-          type="image"
-          :loading="loading"
-        >
-          <div class="cover rounded">
-            <v-img
-              class="cover-img"
-              :src="coverImgUrl"
-              :lazy-src="`${coverImgUrl}?param=64y64`"
-            ></v-img>
-          </div>
-        </v-skeleton-loader>
+      <v-responsive class="cover rounded" :aspect-ratio="1" :width="imgSize" :height="imgSize">
+        <v-img
+          class="cover-img"
+          :src="`${coverImgUrl}?param=256y256`"
+        ></v-img>
       </v-responsive>
       <div class="text-box" :style="{width: `calc(100% - ${imgSize}px)`}">
         <v-skeleton-loader
@@ -313,6 +303,9 @@ export default {
     display: flex;
     & > * {
       transition: var(--animationTime);
+    }
+    .cover {
+      background-color: #dbdbdb;
     }
     .text-box {
       padding-left: 20px;

@@ -2,21 +2,13 @@
   <v-hover v-slot:default="{ hover }" :disabled="$vuetify.breakpoint.mobile">
     <div class="song-item rounded" :class="!loading && hover && 'hover'">
       <v-responsive class="rounded" :aspect-ratio="1" :width="imgSize">
-        <v-skeleton-loader
-          boilerplate
-          class="mx-auto"
-          type="image"
-          :loading="loading"
-        >
-          <div class="cover rounded" @click="clickCover">
-            <v-img
-              class="cover-img"
-              :src="`${item.album && item.album.blurPicUrl.replace('http://', '//')}?param=100y100`"
-              :lazy-src="`${item.album && item.album.blurPicUrl.replace('http://', '//')}?param=10y10`"
-            ><!-- 移动端某些浏览器没内容时图片不会显示，未找到原因 -->0</v-img>
-            <v-icon class="icon" :color="$store.getters.mainColor">mdi-play</v-icon>
-          </div>
-        </v-skeleton-loader>
+        <div class="cover rounded" @click="clickCover">
+          <v-img
+            class="cover-img"
+            :src="`${item.album && item.album.blurPicUrl.replace('http://', '//')}?param=100y100`"
+          ><!-- 移动端某些浏览器没内容时图片不会显示，未找到原因 -->0</v-img>
+          <v-icon class="icon" :color="$store.getters.mainColor" v-if="!loading">mdi-play</v-icon>
+        </div>
       </v-responsive>
       <v-skeleton-loader
         boilerplate
@@ -103,6 +95,8 @@
     height: 100%;
   }
   .cover {
+    height: 100%;
+    background-color: #dbdbdb;
     overflow: hidden;
     cursor: pointer;
     &-img {
