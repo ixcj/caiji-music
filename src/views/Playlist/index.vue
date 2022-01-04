@@ -5,6 +5,7 @@
         <v-img
           class="cover-img"
           :src="`${coverImgUrl}?param=256y256`"
+          v-show="!loading"
         ></v-img>
       </v-responsive>
       <div class="text-box" :style="{width: `calc(100% - ${imgSize}px)`}">
