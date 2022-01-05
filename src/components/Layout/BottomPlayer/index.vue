@@ -235,7 +235,7 @@ export default {
       }
     },
     bindMediaObject() {
-      if ("mediaSession" in navigator) {
+      if ("mediaSession" in navigator && Object.keys(this.currentSongInfo).length) {
         navigator.mediaSession.metadata = new MediaMetadata({
           title: this.currentSongInfo.name,
           artist: this.currentSongInfo.ar.map(item => item.name).join('/'),
