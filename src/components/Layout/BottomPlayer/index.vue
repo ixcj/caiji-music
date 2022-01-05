@@ -233,6 +233,18 @@ export default {
           })
         }
       }
+    },
+    bindMediaObject() {
+      if ("mediaSession" in navigator) {
+        navigator.mediaSession.metadata = new MediaMetadata({
+          title: this.currentSongInfo.name,
+          artist: this.currentSongInfo.ar.map(item => item.name).join('/'),
+          album: this.currentSongInfo.al.name,
+          artwork: [
+            { src: this.currentSongInfo.al.picUrl + '?param=512y512',   sizes: '512x512',   type: 'image/png' }
+          ]
+        })
+      }
     }
   },
   computed: {
@@ -251,6 +263,9 @@ export default {
   watch: {
     '$route.query.showFullPlayer'(val) {
       this.showFullPlayer = Boolean(val)
+    },
+    currentSongInfo() {
+      this.bindMediaObject()
     }
   },
   created() {
@@ -280,6 +295,14 @@ export default {
         this.currentTime = parseInt(this.player.currentTime)
       }
     }, 250)
+    
+    // 绑定媒体对象
+    this.bindMediaObject()
+    // 绑定媒体对象的上一曲、下一曲
+    if ("mediaSession" in navigator) {
+      navigator.mediaSession.setActionHandler('nexttrack', this.playNext)
+      navigator.mediaSession.setActionHandler('previoustrack', this.playPrev)
+    }
   },
   destroyed() {
     clearInterval(this.currentTimeTimer)
