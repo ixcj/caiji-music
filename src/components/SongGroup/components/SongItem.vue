@@ -25,8 +25,8 @@
             </li>
             <li
               class="artist-item"
-              v-for="artist in item.artists"
-              :key="artist.id"
+              v-for="(artist, index) in item.artists"
+              :key="index"
               @click.stop="goTo('Artist', artist.id)"
               @dblclick.stop
             >
