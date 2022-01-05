@@ -16,7 +16,7 @@
           <template v-if="!loading">
             <div class="number">
               <v-icon class="play-icon" small color="#fff">mdi-play</v-icon>
-              {{ item.playCount > 100000 ? parseInt(item.playCount / 10000) + '万' : item.playCount }}
+              {{ formaPlayCount(item.playCount) }}
             </div>
             <v-icon class="icon" :color="$store.getters.textColor">mdi-play</v-icon>
           </template>
@@ -61,6 +61,13 @@
             id: this.item.id
           }
         })
+      },
+      formaPlayCount(count) {
+        return count > 100000000
+          ? parseInt(count / 100000000) + '亿' 
+          : count > 100000
+            ? parseInt(count / 10000) + '万'
+            : count
       }
     }
   };

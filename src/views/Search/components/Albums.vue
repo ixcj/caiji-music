@@ -1,16 +1,49 @@
 <template>
-  <div class="search-list">
-    <div
-      class="search-list-item"
-      v-for="item in dataList"
-      :key="item.id"
-    >{{ item.name }}</div>
+  <div class="albums">
+    <v-hover
+      v-for="(item, index) in dataList"
+      :key="index"
+      v-slot:default="{ hover }"
+    >
+      <div
+        class="albums-item"
+        :class="{ hover: hover && !$vuetify.breakpoint.mobile }"
+        v-ripple="$vuetify.breakpoint.mobile"
+        @click="clickItem(item)"
+        @dblclick="dblclickItem(item)"
+      >
+        <v-img
+          class="cover rounded"
+          :width="80"
+          :height="80"
+          :src="`${item.picUrl.replace('http://', '//')}?param=100y100`"
+        ></v-img>
+        <div class="info-box">
+          <div class="text">
+            <div class="name text-overflow">
+              {{ item.name }}
+            </div>
+            <ul class="artists text-overflow">
+              <li
+                class="artist-item"
+                v-for="artist in item.artists"
+                :key="artist.id"
+              >
+                <span @click.stop="goArtist(artist.id)" @dblclick.stop>{{ artist.name }}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </v-hover>
   </div>
 </template>
 
 <script>
+import { isTouchDevice } from '@/utils'
+
 export default {
-  name: 'SearchList',
+  name: 'Albums',
   props: {
     dataList: {
       type: Array,
@@ -18,16 +51,107 @@ export default {
     }
   },
   data() {
-    return {};
+    return {
+    };
   },
-  methods: {},
+  methods: {
+    dblclickItem(item) {
+      if(this.$vuetify.breakpoint.mobile) return
+
+      this.$router.push({
+        name: 'Album',
+        params: {
+          id: item.id
+        }
+      })
+    },
+    clickItem(item) {
+      if(!this.$vuetify.breakpoint.mobile && !isTouchDevice) return
+      
+      this.$router.push({
+        name: 'Album',
+        params: {
+          id: item.id
+        }
+      })
+    },
+    goArtist(id) {
+      this.$router.push({
+        name: 'Artist',
+        params: {
+          id
+        }
+      })
+    }
+  }
 };
 </script>
 
 <style scoped lang="scss">
-.search-list {
-  &-item {
-    height: 40px;
+.albums {
+  padding-left: 0;
+  background-color: #fff;
+  border: 1px solid #f1f1f1;
+  border-bottom: none;
+  .albums-item {
+    height: 100px;
+    transition: var(--animationTime);
+    padding: 10px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #f1f1f1;
+    &.hover {
+      background-color: rgba($color: #000000, $alpha: 0.05);
+    }
+    .cover {
+      display: inline-block;
+      position: relative;
+      background-color: rgba($color: #000000, $alpha: 0.05);
+      .account-icon {
+        position: absolute;
+        left: 0;
+        right: 0;
+      }
+    }
+    .info-box {
+      display: inline-block;
+      vertical-align: top;
+      margin-left: 10px;
+      width: calc(100% - 100px);
+      height: 100%;
+      position: relative;
+      .text {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        .name {
+          flex: 2;
+        }
+        .artists {
+          flex: 1;
+          list-style-type: none;
+          padding: 0;
+          font-size: .8rem;
+          .artist-item {
+            display: inline-block;
+            cursor: pointer;
+            color: #666;
+            :hover {
+              color: #000;
+            }
+            &::after {
+              content: '/';
+              padding: 0 5px;
+              cursor: default;
+            }
+            &:last-of-type {
+              &::after {
+                content: '';
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
 </style>

@@ -65,11 +65,6 @@ export default {
           id: item.id
         }
       })
-    },
-    updatePageModeFront() {
-      this.$nextTick(() => {
-        this.$refs.VirtualList.updatePageModeFront()
-      })
     }
   }
 };
