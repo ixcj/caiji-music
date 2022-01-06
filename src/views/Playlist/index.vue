@@ -61,7 +61,7 @@
           <span class="text">加载中...</span>
         </div>
         <div class="loding-box" v-show="listError">
-          歌词加载失败，请<span class="text-highlight" style="font-weight: bold; cursor: pointer;" @click="getList">重试</span>
+          歌曲加载失败，请<span class="text-highlight" style="font-weight: bold; cursor: pointer;" @click="getList">重试</span>
         </div>
       </div>
     </div>
