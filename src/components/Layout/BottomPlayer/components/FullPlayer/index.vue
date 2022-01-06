@@ -59,9 +59,11 @@
               :show="show && (!isSmAndDown || !showCover)"
               :playStatus="playStatus"
               :currentTimeMillisecond="currentTimeMillisecond"
+              :isVersion="isVersion"
               @setCurrentTime="currentTime => setCurrentTime(currentTime, true)"
               @switchCover="switchCover"
             />
+            <div class="version-but" :class="{ show: isVersion }" @click="isVersion = !isVersion">译</div>
           </div>
         </transition>
       </div>
@@ -159,6 +161,7 @@ export default {
   },
   data() {
     return {
+      isVersion: false,
       scene: null,
       canvas: null,
       canvasTimer: null,
@@ -471,6 +474,25 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
+        position: relative;
+        .version-but {
+          position: absolute;
+          bottom: 15px;
+          right: 15px;
+          width: 24px;
+          height: 24px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border: 1px solid #f9f9f9;
+          color: #f9f9f9;
+          border-radius: 5px;
+          opacity: 0.6;
+          transition: var(--animationTime);
+          &.show {
+            opacity: 1;
+          }
+        }
       }
 
       .switchover {

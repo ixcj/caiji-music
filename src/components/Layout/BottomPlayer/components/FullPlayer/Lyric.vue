@@ -21,6 +21,7 @@
         @click.native="e => handleSwiperItem(e, index)"
       >
         {{ item.text }}
+        <div class="version" v-show="isVersion">version</div>
         <div class="time">
           <v-icon dark>{{ 'mdi-play' }}</v-icon>
           <span>{{ parseInt(item.time) | timestampToMinute }}</span>
@@ -58,6 +59,10 @@ export default {
     currentTimeMillisecond: {
       type: Number,
       default: 0
+    },
+    isVersion: {
+      type: Boolean,
+      default: false
     }
   },
   components: {
@@ -72,7 +77,9 @@ export default {
       currentLyricIndex: 0,
       isUpdateLyricsLocation: true,
       isUpdateLyricsLocationTimer: null,
-      nolyric: false
+      nolyric: false,
+      lyric: [],
+      lyricVersion: {}
     };
   },
   methods: {
@@ -105,7 +112,8 @@ export default {
           if(res.nolyric) {
             this.nolyric = true
           } else {
-            this.sourceData = res.lrc.lyric
+            this.lyric = this.getLyricArr(res.lrc.lyric)
+            this.lyricVersion = this.getLyricArr(res.tlyric.lyric)
             this.loading = false
           }
           this.updateLyricsLocation(true)
@@ -114,8 +122,29 @@ export default {
           this.error = true
         })
       } else {
-        this.sourceData = ''
+        this.lyric = []
       }
+    },
+    getLyricArr(sourceData) {
+      if(!sourceData) return []
+
+      const lyric = []
+      sourceData.split('\n').filter(Boolean).forEach(item => {
+        const lyricItem = item.replace(/\[(\d{1}|\d{2}):(\d{1}|\d{2})((\.|\:)(\d{1}|\d{2}|\d{3}))?\]/g, '').trim()
+        const timeArr = item.match(/\[(\d{1}|\d{2}):(\d{1}|\d{2})((\.|\:)(\d{1}|\d{2}|\d{3}))?\]/g)
+        if(Array.isArray(timeArr)) {
+          timeArr.forEach(item => {
+            const times = item.substring(item.indexOf("[") + 1, item.indexOf("]")).split(':')
+            const time = times.length ? Number(times[0]) * 60 + Number(times[1]) : 0
+            lyric.push({
+              text: lyricItem,
+              time
+            })
+          })
+        }
+      })
+
+      return lyric.filter(item => item.text.length && !isNaN(item.time)).sort((a, b) => a.time - b.time)
     },
     getLyricIndex(arr, num) {
       if(num < arr[0]) return 1
@@ -174,27 +203,6 @@ export default {
     },
     swiper() {
       return this.$refs.mySwiper.$swiper
-    },
-    lyric() {
-      if(!this.sourceData) return []
-
-      const lyric = []
-      this.sourceData.split('\n').filter(Boolean).forEach(item => {
-        const lyricItem = item.replace(/\[(\d{1}|\d{2}):(\d{1}|\d{2})((\.|\:)(\d{1}|\d{2}|\d{3}))?\]/g, '').trim()
-        const timeArr = item.match(/\[(\d{1}|\d{2}):(\d{1}|\d{2})((\.|\:)(\d{1}|\d{2}|\d{3}))?\]/g)
-        if(Array.isArray(timeArr)) {
-          timeArr.forEach(item => {
-            const times = item.substring(item.indexOf("[") + 1, item.indexOf("]")).split(':')
-            const time = times.length ? Number(times[0]) * 60 + Number(times[1]) : 0
-            lyric.push({
-              text: lyricItem,
-              time
-            })
-          })
-        }
-      })
-
-      return lyric.filter(item => item.text.length && !isNaN(item.time)).sort((a, b) => a.time - b.time)
     }
   },
   watch: {
