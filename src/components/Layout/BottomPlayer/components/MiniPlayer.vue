@@ -3,7 +3,7 @@
     <div class="song-info">
       <v-img
         class="album-art-preloading"
-        :src="isCurrentSong ? currentSongInfo.al.picUrl : defaultAlbumArt"
+        :src="isCurrentSong ? currentSongInfo.al.picUrl + '?param=64y64' : defaultAlbumArt"
         @load="albumArtLoad"
         @error="albumArtLoad"
       />
