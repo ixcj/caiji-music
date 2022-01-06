@@ -1,5 +1,5 @@
 <template>
-  <div class="SetTheme">
+  <div class="set-theme">
     <h1 style="margin-bottom: 10px">主题设置</h1>
 
     <h2 class="block-title">主题色：</h2>
@@ -305,7 +305,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.SetTheme {
+.set-theme {
   .title {
     display: block;
     font-size: 28px;

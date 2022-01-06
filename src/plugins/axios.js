@@ -58,7 +58,7 @@ axios.interceptors.response.use(
       store.commit('layout/setMessage', {
         content: response.data.msg || response.data.message || '未知错误',
         color: 'error',
-        timeout: 5000,
+        timeout: 3000,
         isShow: true
       })
     }
@@ -67,7 +67,7 @@ axios.interceptors.response.use(
     store.commit('layout/setMessage', {
       content: error.response.data.msg || error.response.data.message || error.message || '未知错误',
       color: 'error',
-      timeout: 5000,
+      timeout: 3000,
       isShow: true
     })
     return error.response

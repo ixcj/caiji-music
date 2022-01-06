@@ -5,7 +5,7 @@ export function add0 (n) {
 
 // 毫秒或秒转分钟
 export function timestampToMinute (val) {
-  const second = val > 3600 ? parseInt(val / 1000) : val
+  const second = val > 5940 ? parseInt(val / 1000) : val
   return `${add0(parseInt(second / 60))}:${add0(parseInt(second % 60))}`
 }
 

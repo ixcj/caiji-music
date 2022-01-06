@@ -76,7 +76,7 @@ export default {
           bottomPlayer.loading = true
 
           songApi.detail({
-            ids: id
+            ids: id.toString()
           }).then(res => {
             const songInfo = res.songs[0]
             const privilege = res.privileges[0]
