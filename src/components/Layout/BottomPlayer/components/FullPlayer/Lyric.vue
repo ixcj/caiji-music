@@ -111,12 +111,12 @@ export default {
         }).then(res => {
           if(id !== this.id) return
 
-          if(res?.sgc) {
-            this.nolyric = true
-          } else {
+          if(res.lrc.lyric) {
             this.lyric = this.parsingLyric(res.lrc.lyric)
-            this.lyricVersion = this.parsingLyric(res?.tlyric?.lyric, true)
+            this.lyricVersion = this.parsingLyric(res.tlyric?.lyric, true)
             this.loading = false
+          } else {
+            this.nolyric = true
           }
           this.updateLyricsLocation(true)
         }).catch(() => {
