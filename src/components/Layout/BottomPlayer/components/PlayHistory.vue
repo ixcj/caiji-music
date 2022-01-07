@@ -196,6 +196,11 @@ export default {
       this.setCurrentSongInfo({});
       this.dialog = false;
       this.showPlayHistory = false;
+      this.$nextTick(() => {
+        if (this.fullPlayer) {
+          this.$emit('closeFullPlayer')
+        }
+      })
     },
     deleteItem() {
       if (this.selectId) {
