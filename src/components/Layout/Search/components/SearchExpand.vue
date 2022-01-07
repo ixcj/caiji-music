@@ -227,11 +227,14 @@ export default {
       this.close()
     },
     highlight(value, keyword) {
-      const valueArr = value.split(keyword)
-      const highlightHtml = valueArr.length === 1
-        ? value
-        : `${valueArr[0]}<span class="text-highlight">${keyword}</span>${valueArr[1]}`
-      return highlightHtml
+      const valueArr = value.toLowerCase().split(keyword.toLowerCase())
+      
+      if (valueArr.length === 1) {
+        return value
+      } else {
+        const keywordIndex = value.toLowerCase().indexOf(keyword.toLowerCase())
+        return `${valueArr[0]}<span class="text-highlight">${value.substring(keywordIndex, keyword.length)}</span>${valueArr[1]}`
+      }
     }
   },
   created() {

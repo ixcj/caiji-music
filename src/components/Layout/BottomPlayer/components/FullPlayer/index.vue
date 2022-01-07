@@ -104,7 +104,7 @@
               <v-icon dark>mdi-skip-next</v-icon>
             </v-btn>
           </div>
-          <PlayHistory fullPlayer />
+          <PlayHistory fullPlayer @closeFullPlayer="$emit('close')" />
         </div>
       </div>
     </div>
