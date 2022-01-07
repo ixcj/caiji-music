@@ -7,36 +7,39 @@
     }"
     @click="$emit('switchCover')"
   >
-    <swiper
-      v-show="!loading && !error && !nolyric"
-      class="swiper-box"
-      ref="mySwiper"
-      :options="swiperOptions"
-    >
-      <swiper-slide
-        class="swiper-item"
-        v-for="(item, index) in lyric"
-        :key="index"
-        :class="{ 'current-lyric': currentLyricIndex == (index + 1) }"
-        @click.native="e => handleSwiperItem(e, index)"
+    <div class="mask-image-box" v-show="!loading && !error && !nolyric">
+      <swiper
+        class="swiper-box"
+        ref="mySwiper"
+        :options="swiperOptions"
       >
-        {{ item.text }}
-        <div class="version" v-show="isVersion">version</div>
-        <div class="time">
-          <v-icon dark>{{ 'mdi-play' }}</v-icon>
-          <span>{{ parseInt(item.time) | timestampToMinute }}</span>
-        </div>
-      </swiper-slide>
-    </swiper>
+        <swiper-slide
+          class="swiper-item"
+          v-for="(item, index) in lyric"
+          :key="index"
+          :class="{ 'current-lyric': currentLyricIndex == (index + 1) }"
+          @click.native="e => handleSwiperItem(e, index)"
+        >
+          {{ item.text }}
+          <div class="version" v-show="isVersion && lyricVersion[item.time]">{{ lyricVersion[item.time] }}</div>
+          <div class="time">
+            <v-icon dark>{{ 'mdi-play' }}</v-icon>
+            <span>{{ parseInt(item.time) | timestampToMinute }}</span>
+          </div>
+        </swiper-slide>
+      </swiper>
+    </div>
     <div v-show="loading || error || nolyric">
       <span v-if="nolyric">纯音乐，请欣赏</span>
       <span v-if="loading">歌词加载中...</span>
       <span v-if="error" @click.stop>歌词加载失败，请<span class="text-highlight" style="font-weight: bold; cursor: pointer;" @click="getLyric">重试</span></span>
     </div>
+    <div class="version-but" :class="{ show: isVersion }" @click.stop="setIsVersion(!isVersion)">译</div>
   </div>
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
 import { Swiper, SwiperSlide, directive  } from '@/components/Base/vue-awesome-swiper'
 import 'swiper/css/swiper.css'
 import { isEmpty } from '@/utils'
@@ -59,10 +62,6 @@ export default {
     currentTimeMillisecond: {
       type: Number,
       default: 0
-    },
-    isVersion: {
-      type: Boolean,
-      default: false
     }
   },
   components: {
@@ -83,6 +82,9 @@ export default {
     };
   },
   methods: {
+    ...mapMutations('setting', [
+      'setIsVersion'
+    ]),
     handleSwiperItem(e, index) {
       if(!this.isUpdateLyricsLocation && this.swiper.activeIndex == index) {
         e.stopPropagation()
@@ -109,42 +111,50 @@ export default {
         }).then(res => {
           if(id !== this.id) return
 
-          if(res.nolyric) {
-            this.nolyric = true
-          } else {
-            this.lyric = this.getLyricArr(res.lrc.lyric)
-            this.lyricVersion = this.getLyricArr(res.tlyric.lyric)
+          if(res.lrc.lyric) {
+            this.lyric = this.parsingLyric(res.lrc.lyric)
+            this.lyricVersion = this.parsingLyric(res.tlyric?.lyric, true)
             this.loading = false
+          } else {
+            this.nolyric = true
           }
           this.updateLyricsLocation(true)
         }).catch(() => {
-          this.loading = false
           this.error = true
+        }).finally(() => {
+          this.loading = false
         })
       } else {
         this.lyric = []
       }
     },
-    getLyricArr(sourceData) {
+    parsingLyric(sourceData, isVersion = false) {
       if(!sourceData) return []
 
       const lyric = []
+      const lyricVersion = {}
       sourceData.split('\n').filter(Boolean).forEach(item => {
         const lyricItem = item.replace(/\[(\d{1}|\d{2}):(\d{1}|\d{2})((\.|\:)(\d{1}|\d{2}|\d{3}))?\]/g, '').trim()
         const timeArr = item.match(/\[(\d{1}|\d{2}):(\d{1}|\d{2})((\.|\:)(\d{1}|\d{2}|\d{3}))?\]/g)
         if(Array.isArray(timeArr)) {
           timeArr.forEach(item => {
             const times = item.substring(item.indexOf("[") + 1, item.indexOf("]")).split(':')
-            const time = times.length ? Number(times[0]) * 60 + Number(times[1]) : 0
-            lyric.push({
-              text: lyricItem,
-              time
-            })
+            const time = Number((times.length ? Number(times[0]) * 60 + Number(times[1]) : 0).toFixed(2))
+            if (isVersion) {
+              lyricVersion[time] = lyricItem
+            } else {
+              lyric.push({
+                text: lyricItem,
+                time
+              })
+            }
           })
         }
       })
 
-      return lyric.filter(item => item.text.length && !isNaN(item.time)).sort((a, b) => a.time - b.time)
+      return isVersion
+        ? lyricVersion
+        : lyric.filter(item => item.text.length && !isNaN(item.time)).sort((a, b) => a.time - b.time)
     },
     getLyricIndex(arr, num) {
       if(num < arr[0]) return 1
@@ -183,6 +193,9 @@ export default {
     }
   },
   computed: {
+    ...mapState('setting', [
+      'isVersion'
+    ]),
     swiperOptions() {
       return {
         direction: 'vertical',
@@ -243,7 +256,29 @@ export default {
   align-items: center;
   width: 100%;
   height: 100%;
-  mask-image: linear-gradient(0deg, transparent 0%, #000 10%, #000 90%, transparent 100%);
+  .mask-image-box {
+    width: 100%;
+    height: 100%;
+    mask-image: linear-gradient(0deg, transparent 0%, #000 10%, #000 90%, transparent 100%);
+  }
+  .version-but {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #f9f9f9;
+    color: #f9f9f9;
+    border-radius: 5px;
+    opacity: 0.6;
+    transition: var(--animationTime);
+    &.show {
+      opacity: 1;
+    }
+  }
 }
 
 .swiper-box {

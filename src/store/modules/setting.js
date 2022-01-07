@@ -20,7 +20,11 @@ export default {
     // 播放方式，循环-单曲-随机
     playType: localStorage.getItem('playType')
       ? localStorage.getItem('playType')
-      : 'orderPlay'
+      : 'orderPlay',
+    // 歌词是否启用翻译
+    isVersion: localStorage.getItem('isVersion')
+      ? Boolean(localStorage.getItem('isVersion'))
+      : true
   },
 
   mutations: {
@@ -68,6 +72,12 @@ export default {
       state.playType = value
       localStorage.setItem('playType', state.playType)
     },
+
+    // 设置歌词是否启用翻译
+    setIsVersion(state, value) {
+      state.isVersion = value
+      localStorage.setItem('isVersion', state.isVersion)
+    }
   },
 
   actions: {}
