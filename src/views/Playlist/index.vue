@@ -1,5 +1,5 @@
 <template>
-  <div class="playlist" v-resize="onResize">
+  <div class="playlist" v-resize="onResize" :key="pageNmae">
     <div class="playlist-header">
       <v-responsive class="cover rounded" :aspect-ratio="1" :width="imgSize" :height="imgSize">
         <v-img
