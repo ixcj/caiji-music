@@ -1,5 +1,5 @@
 <template>
-  <div class="playlist" v-resize="onResize" :key="pageNmae">
+  <div class="playlist" v-resize="onResize">
     <div class="playlist-header">
       <v-responsive class="cover rounded" :aspect-ratio="1" :width="imgSize" :height="imgSize">
         <v-img
@@ -12,7 +12,7 @@
         <v-skeleton-loader
           boilerplate
           class="mx-auto"
-          type="heading, button, text"
+          type="heading, heading, button, text"
           :loading="loading"
         >
           <div class="name text-overflow2"><span class="type">{{ pageType }}</span>{{ name }}</div>
@@ -29,7 +29,7 @@
             class="description"
             :class="{'text-overflow': !unfold}"
             :style="{ '-webkit-line-clamp': lineClamp }"
-            v-if="pageNmae == 'Playlist'"
+            v-if="pageName == 'Playlist'"
             ref="description"
           >
             {{ description || '并没有描述' }}
@@ -114,7 +114,7 @@ export default {
       listLoading: false,
       listError: false,
       unfold: false,
-      pageNmae: '',
+      pageName: '',
       id: 0,
       name: '',
       description: '',
@@ -132,7 +132,7 @@ export default {
       'playAll'
     ]),
     onResize() {
-      if(this.routeName !== 'Playlist') return
+      if(this.pageName !== 'Playlist') return
 
       this.isDescriptionOverflow()
     },
@@ -155,7 +155,7 @@ export default {
       this.getDetail({
         id
       }).then(res => {
-        switch(this.routeName) {
+        switch(this.pageName) {
           case 'Playlist':
             this.renderPlaylist(res)
             break
@@ -257,33 +257,32 @@ export default {
         case 'xl': return 3
       }
     },
-    routeName() {
-      const pageNmae = this.$route.name
-      if(['Playlist', 'Album'].includes(pageNmae)) {
-        this.pageNmae = pageNmae
-      }
-      return pageNmae
-    },
     getDetail() {
       const getDataMap = {
         Playlist: this.$api.playlist.playlistDetail,
         Album: this.$api.playlist.album
       }
-      return getDataMap[this.routeName]
+      return getDataMap[this.pageName]
     },
     pageType() {
       return {
         Playlist: '歌单',
         Album: '专辑'
-      }[this.pageNmae]
+      }[this.pageName]
     }
   },
   watch: {
     '$route.params.id'(val) {
-      if(!['Playlist', 'Album'].includes(this.routeName)) return
+      if(!['Playlist', 'Album'].includes(this.pageName)) return
 
       if(val && this.id != val) {
         this.id = val
+      }
+    },
+    '$route.name'(val) {
+      const pageName = val
+      if(['Playlist', 'Album'].includes(pageName)) {
+        this.pageName = pageName
       }
     },
     id() {
@@ -295,7 +294,7 @@ export default {
     }
   },
   created() {
-    this.pageNmae = this.$route.name
+    this.pageName = this.$route.name
     this.id = this.$route.params.id
   }
 };
@@ -316,6 +315,7 @@ export default {
       box-sizing: border-box;
       .name {
         font-size: 1.5rem;
+        height: 4.5rem;
         word-break: break-all;
         .type {
           font-size: .8em;
@@ -365,6 +365,9 @@ export default {
       max-width: 300px;
       height: 1.3rem;
       margin: 0.7rem 0;
+      &:first-child {
+        max-width: 800px;
+      }
     }
     .v-skeleton-loader__button {
       margin: 3px 0 10px 0;
