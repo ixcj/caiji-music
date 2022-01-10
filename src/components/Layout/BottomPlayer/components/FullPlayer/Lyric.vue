@@ -34,7 +34,7 @@
       <span v-if="loading">歌词加载中...</span>
       <span v-if="error" @click.stop>歌词加载失败，请<span class="text-highlight" style="font-weight: bold; cursor: pointer;" @click="getLyric">重试</span></span>
     </div>
-    <div class="version-but" :class="{ show: isVersion }" @click.stop="setIsVersion(!isVersion)">译</div>
+    <div v-show="showLyricVersion" class="version-but" :class="{ show: isVersion }" @click.stop="setIsVersion(!isVersion)">译</div>
   </div>
 </template>
 
@@ -78,7 +78,8 @@ export default {
       isUpdateLyricsLocationTimer: null,
       nolyric: false,
       lyric: [],
-      lyricVersion: {}
+      lyricVersion: {},
+      showLyricVersion: false
     };
   },
   methods: {
@@ -113,8 +114,12 @@ export default {
 
           if(res.lrc.lyric) {
             this.lyric = this.parsingLyric(res.lrc.lyric)
-            this.lyricVersion = this.parsingLyric(res.tlyric?.lyric, true)
-            this.loading = false
+            
+            const tlyric = res.tlyric?.lyric
+            tlyric
+              ? this.lyricVersion = this.parsingLyric(tlyric, true)
+              : this.lyricVersion = {}
+              this.showLyricVersion = Boolean(Object.keys(this.lyricVersion).length)
           } else {
             this.nolyric = true
           }

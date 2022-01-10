@@ -183,7 +183,6 @@ export default {
       if(!this.$vuetify.breakpoint.mobile && !isTouchDevice) return
 
       this.$playMusic(item.id)
-      this.showPlayHistory = false
     },
     dblclickPlayHistoryItem(item) {
       if(this.$vuetify.breakpoint.mobile) return
