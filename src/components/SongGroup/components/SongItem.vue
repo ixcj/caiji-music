@@ -5,7 +5,7 @@
         <div class="cover rounded" @click="clickCover">
           <v-img
             class="cover-img"
-            :src="`${item.album && item.album.blurPicUrl.replace('http://', '//')}?param=100y100`"
+            :src="`${item.album && item.album.blurPicUrl.replace('http://', '//')}?param=256y256`"
           ><!-- 移动端某些浏览器没内容时图片不会显示，未找到原因 -->0</v-img>
           <v-icon class="icon" :color="$store.getters.mainColor" v-if="!loading">mdi-play</v-icon>
         </div>
