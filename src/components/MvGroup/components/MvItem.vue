@@ -8,7 +8,7 @@
         <div class="cover" :class="hover && 'hover'">
           <v-img
             class="img rounded"
-            :src="`${ item.picUrl }?param=400y225`"
+            :src="`${ item.picUrl }?param=800y450`"
           ><!-- 移动端某些浏览器没内容时图片不会显示，未找到原因 -->0</v-img>
           <template v-if="!loading">
             <div class="copywriter">{{ item.copywriter }}</div>
