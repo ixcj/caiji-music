@@ -273,7 +273,7 @@ export default {
   },
   watch: {
     '$route.params.id'(val) {
-      if(!['Playlist', 'Album'].includes(this.pageName)) return
+      if(!['Playlist', 'Album'].includes(this.$route.name)) return
 
       if(val && this.id != val) {
         this.id = val
