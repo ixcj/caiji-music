@@ -44,6 +44,7 @@
         <v-virtual-scroll
           bench="15"
           class="play-history-box scrollbar-y"
+          :class="fullPlayer ? 'full' : ''"
           :items="waitingPlayList"
           :item-height="playHistoryItemHeight"
           height="420"
@@ -107,6 +108,7 @@
         </transition>
       </div>
     </v-scale-transition>
+
     <v-menu
       v-model="showMenu"
       :position-x="x"
@@ -114,7 +116,7 @@
       absolute
       offset-y
       :style="{ top: x + 'px' }"
-      attach=".play-history-box"
+      :attach="fullPlayer ? '.full' : '.play-history-box'"
     >
       <v-list>
         <v-list-item @click="deleteItem">
