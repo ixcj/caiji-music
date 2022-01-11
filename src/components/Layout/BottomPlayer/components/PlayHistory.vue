@@ -44,7 +44,7 @@
         <v-virtual-scroll
           bench="15"
           class="play-history-box scrollbar-y"
-          :class="fullPlayer ? 'full' : ''"
+          :id="fullPlayer ? 'full-play-history-box' : 'play-history-box'"
           :items="waitingPlayList"
           :item-height="playHistoryItemHeight"
           height="420"
@@ -90,9 +90,7 @@
             <div class="bg" @click.stop="closeDialog"></div>
             <transition name="scale-transition" mode="out-in">
               <v-card class="dialog" v-show="dialog">
-                <v-card-title class="card-title"
-                  >清空列表会影响单曲正在播放的歌曲，确定清空列表?</v-card-title
-                >
+                <v-card-title class="card-title">清空列表会影响单曲正在播放的歌曲，确定清空列表?</v-card-title>
                 <v-card-actions>
                   <v-spacer></v-spacer>
                   <v-btn color="green darken-1" text @click="closeDialog()">
@@ -116,7 +114,7 @@
       absolute
       offset-y
       :style="{ top: x + 'px' }"
-      :attach="fullPlayer ? '.full' : '.play-history-box'"
+      :attach="fullPlayer ? '#full-play-history-box' : '#play-history-box'"
     >
       <v-list>
         <v-list-item @click="deleteItem">
