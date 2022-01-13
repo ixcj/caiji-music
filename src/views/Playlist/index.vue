@@ -20,10 +20,10 @@
             small
             class="play-all"
             :color="$store.getters.mainColor"
-            @click="dialog = true"
+            @click="handlePlayListAll()"
           >
             <v-icon>mdi-play</v-icon>
-            <span @click="dialog = true">播放全部</span>
+            <span>播放全部</span>
           </v-btn>
           <div
             class="description"
@@ -149,6 +149,7 @@ export default {
       this.loading = true
       this.listLoading = true
       this.unfold = false
+      this.listError = false
 
       const { id } = this
       if(!id || !this.getDetail) return
@@ -193,13 +194,11 @@ export default {
         
         this.songs = res.songs
         this.listLoading = false
-
-        this.$refs.songs.updatePageModeFront()
       }).catch(() => {
         this.listError = true
-        this.listLoading = false
         this.songs = []
-
+      }).finally(() => {
+        this.listLoading = false
         this.$refs.songs.updatePageModeFront()
       })
     },
@@ -215,7 +214,7 @@ export default {
 
       this.songs = data.songs
     },
-    playListAll() {
+    handlePlayListAll() {
       if(this.listLoading) {
         this.$message({
           content: '请等待列表加载完成',
@@ -223,6 +222,10 @@ export default {
         })
         return
       }
+
+      this.dialog = true
+    },
+    playListAll() {
       if(!this.songs.length) {
         this.$message({
           content: '列表为空！',
