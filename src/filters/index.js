@@ -2,7 +2,7 @@ import Vue from 'vue'
 import {
   add0,
   timestampToMinute,
-  formatDate
+  formatTime
 } from '@/utils/dateTime'
 
 // 补0
@@ -12,4 +12,4 @@ Vue.filter('add0', n => add0(n))
 Vue.filter('timestampToMinute', timestamp => timestampToMinute(timestamp))
 
 // 时间戳格式转换
-Vue.filter('formatDate', timestamp => formatDate(timestamp))
+Vue.filter('formatTime', timestamp => formatTime(timestamp))

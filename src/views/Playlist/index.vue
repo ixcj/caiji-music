@@ -42,7 +42,7 @@
               歌手：{{ artists }}
             </div>
             <div class="text-overflow">
-              时间：{{ publishTime | formatDate }}
+              时间：{{ publishTime | formatTime }}
             </div>
           </div>
         </v-skeleton-loader>

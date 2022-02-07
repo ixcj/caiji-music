@@ -16,7 +16,7 @@ export function villageAge (timestamp) {
 }
 
 // 时间戳转换
-export function formatDate (timestamp, format = 'YYYY-MM-DD') {
+export function formatTime (timestamp, format = 'YYYY-MM-DD') {
   if(!timestamp) return
   
   const date = new Date(timestamp.length === 10 ? timestamp * 1000 : timestamp);
