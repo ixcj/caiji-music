@@ -95,7 +95,7 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100%;
-  font-size: 32px;
+  font-size: 2rem;
   &-svg-box {
     width: 100%;
     max-width: 500px;
@@ -131,9 +131,9 @@ export default {
       margin-top: 15px;
       font-size: .5em;
       .but {
-        font-size: 1.1em;
+        font-size: 1em;
         font-weight: 400;
-        padding: 3px 10px;
+        padding: 3px 12px;
         border-radius: 99px;
         border: 1px solid #999;
         background-color: rgba($color: #000, $alpha: .03);
