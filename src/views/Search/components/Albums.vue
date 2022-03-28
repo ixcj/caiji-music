@@ -145,7 +145,7 @@ export default {
             }
             &:last-of-type {
               &::after {
-                content: '';
+                content: none;
               }
             }
           }

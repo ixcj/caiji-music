@@ -381,7 +381,7 @@ export default {
             }
             &:last-of-type {
               &::after {
-                display: none;
+                content: none;
               }
             }
           }
