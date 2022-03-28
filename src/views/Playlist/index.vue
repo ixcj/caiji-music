@@ -185,6 +185,17 @@ export default {
       this.listError = false
       this.listLoading = true
 
+      // 防止自定义歌单过长（临时解决方案）
+      if (this.trackIds.split(',').length > 1000) {
+        const trackIds = this.trackIds.split(',')
+        trackIds.length = 1000
+        this.trackIds = trackIds.join(',')
+        this.$message({
+          color: 'warning',
+          content: '内容过多，更多内容请使用网易云查看'
+        })
+      }
+
       this.$api.song.detail({
         ids: this.trackIds
       }).then(res => {
