@@ -2,11 +2,11 @@ import { get, post } from '@/plugins/axios'
 
 export default {
   // 推荐新音乐
-  topSong: p => get('/top/song', p),
+  topSong: p => post('/top/song', p),
   // 获取音乐详情
   detail: p => post('/song/detail', p),
   // 获取音乐url
-  url: p => get('/song/url', p),
+  url: p => post('/song/url', p),
   // 获取歌词
-  lyric: p => get('/lyric', p)
+  lyric: p => post('/lyric', p)
 }

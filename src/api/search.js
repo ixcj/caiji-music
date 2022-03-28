@@ -2,11 +2,11 @@ import { get, post } from '@/plugins/axios'
 
 export default {
   // 搜索
-  search: p => get('/cloudsearch', p),
+  search: p => post('/cloudsearch', p),
   // 搜索默认关键词
-  default: p => get('/search/default', p),
+  default: p => post('/search/default', p),
   // 热门搜索
-  hot: p => get('/search/hot/detail', p),
+  hot: p => post('/search/hot/detail', p),
   // 搜索建议
-  suggest: p => get('/search/suggest', p)
+  suggest: p => post('/search/suggest', p)
 }

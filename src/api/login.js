@@ -9,7 +9,7 @@ export default {
   // 二维码key生成
   qrKey: p => post(`/login/qr/key`, p),
   // 二维码生成
-  qrCreate: p => get(`/login/qr/create`, p),
+  qrCreate: p => post(`/login/qr/create`, p),
   // 二维码检测扫码状态
   qrCheck: p => post(`/login/qr/check`, p),
 
@@ -21,7 +21,7 @@ export default {
   cellphoneCheck: p => post('/cellphone/existence/check', p),
 
   // 刷新登录
-  refreshLogin: p => get('/login/refresh', p),
+  refreshLogin: p => post('/login/refresh', p),
   
   // 退出登录
   logout: p => post('/logout', p)
