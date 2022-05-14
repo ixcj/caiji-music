@@ -329,7 +329,6 @@ export default {
     .mask-layer {
       width: 100%;
       height: 100%;
-      // backdrop-filter: blur(40px);
       background-color: rgba($color: #000000, $alpha: 0.6);
       position: absolute;
     }

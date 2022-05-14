@@ -14,11 +14,15 @@
       >
         <v-img
           class="cover rounded"
-          :width="80"
-          :height="80"
+          :width="imgWidth"
+          :height="imgWidth"
           :src="`${item.picUrl.replace('http://', '//')}?param=100y100`"
         ></v-img>
-        <div class="info-box">
+        <div
+          class="info-box"
+          :class="{ mobile: $vuetify.breakpoint.mobile }"
+          :style="{ height: `${imgWidth}px`, width: `calc(100% - ${imgWidth + 10}px)` }"
+        >
           <div class="text">
             <div class="name text-overflow">
               {{ item.name }}
@@ -53,6 +57,11 @@ export default {
   data() {
     return {
     };
+  },
+  computed: {
+    imgWidth() {
+      return this.$vuetify.breakpoint.mobile ? 60 : 80
+    }
   },
   methods: {
     dblclickItem(item) {
@@ -94,7 +103,6 @@ export default {
   border: 1px solid #f1f1f1;
   border-bottom: none;
   .albums-item {
-    height: 100px;
     transition: var(--animationTime);
     padding: 10px;
     box-sizing: border-box;
@@ -106,6 +114,8 @@ export default {
       display: inline-block;
       position: relative;
       background-color: rgba($color: #000000, $alpha: 0.05);
+      vertical-align: middle;
+      transition: var(--animationTime);
       .account-icon {
         position: absolute;
         left: 0;
@@ -116,8 +126,6 @@ export default {
       display: inline-block;
       vertical-align: top;
       margin-left: 10px;
-      width: calc(100% - 100px);
-      height: 100%;
       position: relative;
       .text {
         height: 100%;
@@ -148,6 +156,20 @@ export default {
                 content: none;
               }
             }
+          }
+        }
+      }
+      &.mobile {
+        .text {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+          align-items: flex-start;
+          .name {
+            flex: none;
+          }
+          .artists {
+            flex: none;
           }
         }
       }
