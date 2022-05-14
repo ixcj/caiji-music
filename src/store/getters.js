@@ -20,7 +20,7 @@ export default {
   pageAnimation: state => state.setting.theme.pageAnimation,
   dynamicEffect: state => state.setting.theme.dynamicEffect,
   playType: state => state.setting.playType,
-  isVersion: state => state.setting.isVersion,
+  isTranslate: state => state.setting.isTranslate,
 
   // 歌曲
   currentSongInfo: state => state.song.currentSongInfo,

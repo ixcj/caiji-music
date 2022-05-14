@@ -21,7 +21,7 @@
           @click.native="e => handleSwiperItem(e, index)"
         >
           {{ item.text }}
-          <div class="version" v-show="isVersion && lyricVersion[item.time]">{{ lyricVersion[item.time] }}</div>
+          <div class="version" v-show="isTranslate && lyricVersion[item.time]">{{ lyricVersion[item.time] }}</div>
           <div class="time">
             <v-icon dark>{{ 'mdi-play' }}</v-icon>
             <span>{{ parseInt(item.time) | timestampToMinute }}</span>
@@ -34,7 +34,7 @@
       <span v-if="loading">歌词加载中...</span>
       <span v-if="error" @click.stop>歌词加载失败，请<span class="text-highlight" style="font-weight: bold; cursor: pointer;" @click="getLyric">重试</span></span>
     </div>
-    <div v-show="showLyricVersion" class="version-but" :class="{ show: isVersion }" @click.stop="setIsVersion(!isVersion)">译</div>
+    <div v-show="showLyricVersion" class="version-but" :class="{ show: isTranslate }" @click.stop="setIsTranslate(!isTranslate)">译</div>
   </div>
 </template>
 
@@ -84,7 +84,7 @@ export default {
   },
   methods: {
     ...mapMutations('setting', [
-      'setIsVersion'
+      'setIsTranslate'
     ]),
     handleSwiperItem(e, index) {
       if(!this.isUpdateLyricsLocation && this.swiper.activeIndex == index) {
@@ -133,7 +133,7 @@ export default {
         this.lyric = []
       }
     },
-    parsingLyric(sourceData, isVersion = false) {
+    parsingLyric(sourceData, isTranslate = false) {
       if(!sourceData) return []
 
       const lyric = []
@@ -145,7 +145,7 @@ export default {
           timeArr.forEach(item => {
             const times = item.substring(item.indexOf("[") + 1, item.indexOf("]")).split(':')
             const time = Number((times.length ? Number(times[0]) * 60 + Number(times[1]) : 0).toFixed(2))
-            if (isVersion) {
+            if (isTranslate) {
               lyricVersion[time] = lyricItem
             } else {
               lyric.push({
@@ -157,7 +157,7 @@ export default {
         }
       })
 
-      return isVersion
+      return isTranslate
         ? lyricVersion
         : lyric.filter(item => item.text.length && !isNaN(item.time)).sort((a, b) => a.time - b.time)
     },
@@ -199,7 +199,7 @@ export default {
   },
   computed: {
     ...mapState('setting', [
-      'isVersion'
+      'isTranslate'
     ]),
     swiperOptions() {
       return {

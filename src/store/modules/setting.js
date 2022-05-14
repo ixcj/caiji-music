@@ -22,8 +22,8 @@ export default {
       ? localStorage.getItem('playType')
       : 'orderPlay',
     // 歌词是否启用翻译
-    isVersion: localStorage.getItem('isVersion')
-      ? Boolean(localStorage.getItem('isVersion'))
+    isTranslate: localStorage.getItem('isTranslate')
+      ? Boolean(localStorage.getItem('isTranslate'))
       : true
   },
 
@@ -74,9 +74,9 @@ export default {
     },
 
     // 设置歌词是否启用翻译
-    setIsVersion(state, value) {
-      state.isVersion = value
-      localStorage.setItem('isVersion', state.isVersion)
+    setIsTranslate(state, value) {
+      state.isTranslate = value
+      localStorage.setItem('isTranslate', state.isTranslate)
     }
   },
 
