@@ -1,7 +1,7 @@
 <template>
   <div class="videos-list">
     <div
-      class="search-list-item"
+      class="videos-list-item"
       v-for="item in dataList"
       :key="item.vid"
     >{{ item.title }}</div>
