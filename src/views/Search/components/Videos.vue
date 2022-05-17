@@ -1,5 +1,5 @@
 <template>
-  <div class="search-list">
+  <div class="videos-list">
     <div
       class="search-list-item"
       v-for="item in dataList"
@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: 'SearchList',
+  name: 'VideosList',
   props: {
     dataList: {
       type: Array,
@@ -25,7 +25,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.search-list {
+.videos-list {
   &-item {
     height: 40px;
   }
