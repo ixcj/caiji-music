@@ -2,9 +2,33 @@
   <div class="videos-list">
     <div
       class="videos-list-item"
+      :class="$vuetify.breakpoint.name"
       v-for="item in dataList"
       :key="item.vid"
-    >{{ item.title }}</div>
+    >
+      <div class="videos-list-item-img">
+        <v-img
+          class="cover rounded-lg"
+          :aspect-ratio="16/9"
+          :src="item.coverUrl"
+          :alt="item.title"
+          @click="clickItem(item)"
+          @dblclick="dblclickItem(item)"
+        />
+      </div>
+      <div class="videos-list-item-info">
+        <div class="videos-list-item-title text-overflow" :title="item.title">
+          <span>{{ item.title }}</span>
+        </div>
+        <ul class="videos-list-item-creator-box">
+          <li
+            v-for="creator in item.creator"
+            :key="creator.userId"
+            class="videos-list-item-creator-item"
+          >{{ creator.userName }}</li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -18,7 +42,9 @@ export default {
     }
   },
   data() {
-    return {};
+    return {
+      imgWidth: 80
+    };
   },
   methods: {},
 };
@@ -26,8 +52,71 @@ export default {
 
 <style scoped lang="scss">
 .videos-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
   &-item {
-    height: 40px;
+    .cover {
+      cursor: pointer;
+    }
+    .videos-list-item-info {
+      .videos-list-item-title {
+        margin-top: 0.4em;
+        font-size: 1em;
+        cursor: pointer;
+      }
+      .videos-list-item-creator-box {
+        flex: 1;
+        list-style-type: none;
+        padding: 0;
+        font-size: .8rem;
+        .videos-list-item-creator-item {
+          cursor: pointer;
+          display: inline-block;
+          color: #666;
+          transition: var(--animationTime);
+          &:hover {
+            color: #000;
+          }
+          &::after {
+            content: '/';
+            padding: 0 5px;
+            cursor: default;
+          }
+          &:last-of-type {
+            &::after {
+              content: none;
+            }
+          }
+        }
+      }
+    }
+    &.xl {
+      width: calc((100% - 45px) / 4);
+    }
+    &.lg {
+      width: calc((100% - 45px) / 4);
+    }
+    &.md {
+      width: calc((100% - 30px) / 3);
+    }
+    &.sm {
+      width: calc((100% - 15px) / 2);
+    }
+    &.xs {
+      width: 100%;
+      display: flex;
+      gap: 10px;
+      .videos-list-item-img {
+        width: 40%;
+      }
+      .videos-list-item-info {
+        width: calc(100% - 40% - 10px);
+        .videos-list-item-creator-box {
+          margin-top: 10px;
+        }
+      }
+    }
   }
 }
 </style>
