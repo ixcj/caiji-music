@@ -17,10 +17,17 @@
         />
       </div>
       <div class="videos-list-item-info">
-        <div class="videos-list-item-title text-overflow" :title="item.title">
+        <div
+          class="videos-list-item-title"
+          :class="`text-overflow${$vuetify.breakpoint.mobile ? '2' : ''}`"
+          :title="item.title"
+          @click="clickItem(item)"
+          @dblclick="dblclickItem(item)"
+        >
+          <span v-if="item.type === 0" class="tag">MV</span>
           <span>{{ item.title }}</span>
         </div>
-        <ul class="videos-list-item-creator-box">
+        <ul class="videos-list-item-creator-box text-overflow">
           <li
             v-for="creator in item.creator"
             :key="creator.userId"
@@ -46,7 +53,28 @@ export default {
       imgWidth: 80
     };
   },
-  methods: {},
+  methods: {
+    dblclickItem(item) {
+      if(this.$vuetify.breakpoint.mobile) return
+
+      this.$router.push({
+        name: item.type === 0 ? 'Mv' : 'Video',
+        params: {
+          id: item.vid
+        }
+      })
+    },
+    clickItem(item) {
+      if(!this.$vuetify.breakpoint.mobile && !isTouchDevice) return
+      
+      this.$router.push({
+        name: item.type === 0 ? 'Mv' : 'Video',
+        params: {
+          id: item.vid
+        }
+      })
+    },
+  },
 };
 </script>
 
@@ -64,12 +92,23 @@ export default {
         margin-top: 0.4em;
         font-size: 1em;
         cursor: pointer;
+        .tag {
+          font-size: .8em;
+          display: inline-block;
+          padding: 0 .5rem;
+          border-radius: 5px;
+          margin-right: 5px;
+          color: var(--mainColor);
+          border: var(--mainColor) solid 1px;
+        }
+        span {
+          vertical-align: middle;
+        }
       }
       .videos-list-item-creator-box {
-        flex: 1;
         list-style-type: none;
         padding: 0;
-        font-size: .8rem;
+        font-size: .8em;
         .videos-list-item-creator-item {
           cursor: pointer;
           display: inline-block;
@@ -112,8 +151,11 @@ export default {
       }
       .videos-list-item-info {
         width: calc(100% - 40% - 10px);
-        .videos-list-item-creator-box {
-          margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        .videos-list-item-title {
+          margin-top: 0;
         }
       }
     }
