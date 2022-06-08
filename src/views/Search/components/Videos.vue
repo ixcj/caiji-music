@@ -13,7 +13,6 @@
           :src="item.coverUrl"
           :alt="item.title"
           @click="clickItem(item)"
-          @dblclick="dblclickItem(item)"
         />
       </div>
       <div class="videos-list-item-info">
@@ -22,7 +21,6 @@
           :class="`text-overflow${$vuetify.breakpoint.mobile ? '2' : ''}`"
           :title="item.title"
           @click="clickItem(item)"
-          @dblclick="dblclickItem(item)"
         >
           <span v-if="item.type === 0" class="tag">MV</span>
           <span>{{ item.title }}</span>
@@ -54,19 +52,7 @@ export default {
     };
   },
   methods: {
-    dblclickItem(item) {
-      if(this.$vuetify.breakpoint.mobile) return
-
-      this.$router.push({
-        name: item.type === 0 ? 'Mv' : 'Video',
-        params: {
-          id: item.vid
-        }
-      })
-    },
     clickItem(item) {
-      if(!this.$vuetify.breakpoint.mobile && !isTouchDevice) return
-      
       this.$router.push({
         name: item.type === 0 ? 'Mv' : 'Video',
         params: {
