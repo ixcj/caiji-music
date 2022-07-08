@@ -74,7 +74,7 @@ export default {
       loading: false,
       count: 0,
       type: 1,
-      limit: 30,
+      // limit: 30,
       page: 1,
       keywords: '',
       dataList: []
@@ -155,6 +155,9 @@ export default {
     // keywords() {
     //   return this.$route.params.keyword
     // },
+    limit() {
+      return this.type === 1014 ? 24 : 30
+    },
     offset() {
       return this.limit * (this.page - 1)
     },

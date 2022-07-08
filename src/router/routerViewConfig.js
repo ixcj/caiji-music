@@ -29,7 +29,7 @@ export default [
   {
     path: 'album/:id',
     name: 'Album',
-    component: () => import('../views/Playlist'),
+    component: () => import('../views/Album'),
     meta: {
       title: '专辑'
     }

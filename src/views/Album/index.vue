@@ -287,7 +287,7 @@ export default {
   },
   watch: {
     '$route.params.id'(val) {
-      if(!['Playlist'].includes(this.$route.name)) return
+      if(!['Album'].includes(this.$route.name)) return
 
       if(val && this.id != val) {
         this.id = val
@@ -295,7 +295,7 @@ export default {
     },
     '$route.name'(val) {
       const pageName = val
-      if(['Playlist'].includes(pageName)) {
+      if(['Album'].includes(pageName)) {
         this.pageName = pageName
       }
     },

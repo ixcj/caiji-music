@@ -10,7 +10,6 @@
         :class="{ hover: hover && !$vuetify.breakpoint.mobile }"
         v-ripple="$vuetify.breakpoint.mobile"
         @click="clickItem(item)"
-        @dblclick="dblclickItem(item)"
       >
         <v-img
           class="cover rounded"
@@ -64,19 +63,7 @@ export default {
     }
   },
   methods: {
-    dblclickItem(item) {
-      if(this.$vuetify.breakpoint.mobile) return
-
-      this.$router.push({
-        name: 'Album',
-        params: {
-          id: item.id
-        }
-      })
-    },
     clickItem(item) {
-      if(!this.$vuetify.breakpoint.mobile && !isTouchDevice) return
-      
       this.$router.push({
         name: 'Album',
         params: {

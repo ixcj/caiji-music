@@ -118,7 +118,7 @@ export default {
       //   bottomPlayer.player.currentTime = bottomPlayer.currentTime = 0
       // }
 
-      if(currentSongInfo.privilege.fee !== 1 && currentSongInfo.privilege.fee !== 4) {
+      if(false && currentSongInfo.privilege.fee !== 1 && currentSongInfo.privilege.fee !== 4) {
         setSongInfo()
         context.commit('setMusicUrl', { url: `https://music.163.com/song/media/outer/url?id=${ id }.mp3`, bottomPlayer })
       } else {
