@@ -98,6 +98,9 @@ export default {
     ...mapActions('song', [
       'getCurrentSongUrl'
     ]),
+    ...mapMutations('layout', [
+      'setShowFullPlayer'
+    ]),
     // 播放音乐
     musicPlay() {
       if(!this.currentSongInfo.id) return
@@ -263,6 +266,7 @@ export default {
   watch: {
     '$route.query.showFullPlayer'(val) {
       this.showFullPlayer = Boolean(val)
+      this.setShowFullPlayer(this.showFullPlayer)
     },
     currentSongInfo() {
       this.bindMediaObject()

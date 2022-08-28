@@ -4,6 +4,8 @@ export default {
   namespaced: true,
   
   state: {
+    // 是否打开全屏播放器
+    showFullPlayer: false,
     // 全局消息框
     message: {
       content: '',
@@ -32,6 +34,9 @@ export default {
         })
       }
       state.message = message
+    },
+    setShowFullPlayer(state, value) {
+      state.showFullPlayer = value
     }
   },
 
