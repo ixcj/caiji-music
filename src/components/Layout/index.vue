@@ -116,7 +116,7 @@ export default {
   computed: {
     ...mapState('user', ['userInfo']),
     ...mapState('setting', ['theme']),
-    ...mapState('layout', ['exclude', 'showFullPlayer']),
+    ...mapState('layout', ['exclude', 'showFullPlayer', 'searchActive']),
     userBg() {
       return this.userInfo?.backgroundUrl ? this.userInfo.backgroundUrl.replace('http://', '//') : ''
     },
@@ -131,7 +131,7 @@ export default {
       return theme
     },
     isBigScreen() {
-      return this.$vuetify.breakpoint.xl && !this.showFullPlayer
+      return this.$vuetify.breakpoint.xl && !this.showFullPlayer && !this.searchActive
     }
   },
   methods: {

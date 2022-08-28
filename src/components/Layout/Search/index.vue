@@ -54,6 +54,9 @@ export default {
     ...mapMutations('history', [
       'addSearchHistory'
     ]),
+    ...mapMutations('layout', [
+      'setSearchActive'
+    ]),
     search() {
       let toParam = {
           name: 'Search',
@@ -113,6 +116,9 @@ export default {
     },
     showExpand(val) {
       this.$lock(val, true)
+    },
+    active(val) {
+      this.setSearchActive(val)
     }
   }
 };

@@ -6,6 +6,8 @@ export default {
   state: {
     // 是否打开全屏播放器
     showFullPlayer: false,
+    // 搜索框是否激活
+    searchActive: false,
     // 全局消息框
     message: {
       content: '',
@@ -37,6 +39,9 @@ export default {
     },
     setShowFullPlayer(state, value) {
       state.showFullPlayer = value
+    },
+    setSearchActive(state, value) {
+      state.searchActive = value
     }
   },
 
