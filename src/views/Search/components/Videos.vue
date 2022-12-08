@@ -72,6 +72,7 @@ export default {
   &-item {
     .cover {
       cursor: pointer;
+      background-color: rgba($color: #000000, $alpha: 0.05);
     }
     .videos-list-item-info {
       .videos-list-item-title {
