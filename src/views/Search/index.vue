@@ -145,6 +145,9 @@ export default {
           })
         }
       } else {
+        this.$router.replace({
+          query: { type }
+        })
         this.type = type
         this.count = 0
         this.getData(true)
@@ -188,6 +191,7 @@ export default {
   },
   created() {
     this.keywords = this.$route.params.keyword
+    this.type = Number(this.$route.query.type) || 1
   }
 };
 </script>
